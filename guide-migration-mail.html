@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mail Migration Guide Directory</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:      #1A2B47;
+      --navy-deep: #111C30;
+      --bg:        #F0F3F8;
+      --white:     #FFFFFF;
+      --teal:      #0D8A8A;
+      --teal-light:#E0F4F4;
+      --amber:     #F0A500;
+      --text:      #1A2B47;
+      --muted:     #5A6B82;
+      --border:    #D8DFF0;
+      --shadow:    0 2px 16px rgba(26,43,71,.10);
+
+      --claude-color:  #C87533;
+      --zoho-color:    #C6222A;
+      --google-color:  #1A73E8;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ─── HEADER ─────────────────────────────────────── */
+    header {
+      background: var(--navy);
+      padding: 56px 24px 52px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: rgba(13,138,138,.12);
+      pointer-events: none;
+    }
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: -60px;
+      width: 220px; height: 220px;
+      border-radius: 50%;
+      background: rgba(240,165,0,.08);
+      pointer-events: none;
+    }
+
+    .header-eyebrow {
+      display: inline-block;
+      background: rgba(13,138,138,.18);
+      color: #5FD3D3;
+      font-family: 'Inter', sans-serif;
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 18px;
+      text-transform: uppercase;
+    }
+
+    header h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(1.9rem, 4vw, 2.8rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+      max-width: 640px;
+      margin: 0 auto 20px;
+    }
+
+    header h1 span {
+      color: var(--amber);
+    }
+
+    header p {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: rgba(255,255,255,.72);
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    /* ─── SEARCH BAR ─────────────────────────────────── */
+    .search-wrapper {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 40px 24px 0;
+      position: relative;
+      z-index: 10;
+    }
+
+    .search-inner {
+      position: relative;
+      background: var(--white);
+      border-radius: 14px;
+      box-shadow: 0 4px 24px rgba(26,43,71,.14);
+      display: flex;
+      align-items: center;
+      border: 2px solid transparent;
+      transition: border-color .2s;
+    }
+    .search-inner:focus-within {
+      border-color: var(--teal);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 18px;
+      pointer-events: none;
+    }
+
+    #search-input {
+      width: 100%;
+      border: none;
+      outline: none;
+      padding: 16px 18px 16px 50px;
+      font-family: 'Inter', sans-serif;
+      font-size: .95rem;
+      color: var(--text);
+      background: transparent;
+      border-radius: 14px;
+    }
+    #search-input::placeholder { color: #9AABBE; }
+
+    .search-clear {
+      display: none;
+      position: absolute;
+      right: 16px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #9AABBE;
+      font-size: 1.1rem;
+      line-height: 1;
+      padding: 4px;
+      border-radius: 50%;
+      transition: color .15s, background .15s;
+    }
+    .search-clear:hover { color: var(--navy); background: var(--bg); }
+    .search-clear.visible { display: block; }
+
+    /* ─── DID YOU MEAN ───────────────────────────────── */
+    #did-you-mean {
+      display: none;
+      margin-top: 10px;
+      font-size: .85rem;
+      color: var(--muted);
+      animation: fadeSlideIn .18s ease;
+    }
+    #did-you-mean.visible { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+
+    #did-you-mean span { white-space: nowrap; }
+
+    .suggestion-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--white);
+      border: 1.5px solid var(--teal);
+      color: var(--teal);
+      font-size: .82rem;
+      font-weight: 600;
+      padding: 3px 12px 3px 9px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background .15s, color .15s;
+      white-space: nowrap;
+    }
+    .suggestion-pill:hover {
+      background: var(--teal);
+      color: var(--white);
+    }
+    .suggestion-pill svg { flex-shrink: 0; }
+
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── MAIN CONTENT ───────────────────────────────── */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    .section-label {
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: .06em;
+      margin-bottom: 24px;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    /* ─── GUIDE CARD ─────────────────────────────────── */
+    .guide-card {
+      background: var(--white);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      transition: transform .2s, box-shadow .2s;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+    }
+    .guide-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(26,43,71,.16);
+    }
+    .guide-card:focus-visible {
+      outline: 3px solid var(--teal);
+      outline-offset: 2px;
+    }
+
+    .card-image {
+      height: 168px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Per-brand colors */
+    .card-image.claude  { background: linear-gradient(135deg, #2C1A0E 0%, #6B3010 60%, #C87533 100%); }
+    .card-image.zoho    { background: linear-gradient(135deg, #1A0505 0%, #7A0F14 60%, #C6222A 100%); }
+    .card-image.google  { background: linear-gradient(135deg, #0A1929 0%, #0D4C9C 60%, #1A73E8 100%); }
+
+    .card-logo {
+      width: 72px;
+      height: 72px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,.15);
+      backdrop-filter: blur(4px);
+      border: 1.5px solid rgba(255,255,255,.22);
+    }
+
+    .card-logo svg {
+      width: 40px;
+      height: 40px;
+    }
+
+    .card-body {
+      padding: 22px 24px 24px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .card-tag {
+      display: inline-block;
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .07em;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+    .card-tag.claude  { background: rgba(200,117,51,.12); color: #A0531A; }
+    .card-tag.zoho    { background: rgba(198,34,42,.10);  color: #9E1219; }
+    .card-tag.google  { background: rgba(26,115,232,.10); color: #1557B0; }
+
+    .card-title {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+
+    .card-desc {
+      font-size: .875rem;
+      color: var(--muted);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .card-meta {
+      font-size: .76rem;
+      color: #9AABBE;
+    }
+
+    .card-cta {
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--teal);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .card-cta svg { transition: transform .2s; }
+    .guide-card:hover .card-cta svg { transform: translateX(3px); }
+
+    /* ─── NO RESULTS ─────────────────────────────────── */
+    #no-results {
+      display: none;
+      text-align: center;
+      padding: 64px 24px;
+    }
+
+    .no-results-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      box-shadow: var(--shadow);
+    }
+
+    #no-results h2 {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+
+    #no-results p {
+      color: var(--muted);
+      font-size: .9rem;
+      line-height: 1.6;
+      max-width: 380px;
+      margin: 0 auto 28px;
+    }
+
+    .btn-mail {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--navy);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: .88rem;
+      font-weight: 600;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 10px;
+      transition: background .2s, transform .15s;
+    }
+    .btn-mail:hover {
+      background: var(--teal);
+      transform: translateY(-1px);
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────── */
+    footer {
+      background: var(--navy-deep);
+      color: rgba(255,255,255,.45);
+      text-align: center;
+      padding: 24px;
+      font-size: .8rem;
+    }
+
+    /* ─── HIGHLIGHT ──────────────────────────────────── */
+    mark {
+      background: rgba(240,165,0,.28);
+      color: inherit;
+      border-radius: 2px;
+      padding: 0 1px;
+    }
+
+    /* ─── RESPONSIVE ─────────────────────────────────── */
+    @media (max-width: 600px) {
+      header { padding: 40px 20px 40px; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .guide-card, .btn-mail { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ HEADER ═══════════════════════════════════════ -->
+  <header>
+    <div class="header-eyebrow">Internal documentation</div>
+    <h1>Mail Migration <span>Guide Directory</span></h1>
+    <p>This site brings together all the tutorials you need to navigate your email migration. Follow the guide for your platform to verify and confirm on your own that your account has been correctly migrated.</p>
+  </header>
+
+  <!-- ═══ SEARCH ════════════════════════════════════════ -->
+  <div class="search-wrapper">
+    <div class="search-inner">
+      <svg class="search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="9" cy="9" r="6.5" stroke="#9AABBE" stroke-width="1.8"/>
+        <path d="M14 14L17.5 17.5" stroke="#9AABBE" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+      <input
+        id="search-input"
+        type="search"
+        placeholder="Search for a guide… (e.g. Zoho, login, verification…)"
+        autocomplete="off"
+        aria-label="Search for a guide"
+      />
+      <button class="search-clear" id="search-clear" aria-label="Clear search">✕</button>
+    </div>
+    <div id="did-you-mean" role="status" aria-live="polite">
+      <span>Did you mean:</span>
+      <!-- suggestion pills injected by JS -->
+    </div>
+  </div>
+
+  <!-- ═══ MAIN ══════════════════════════════════════════ -->
+  <main>
+    <p class="section-label" id="results-label">3 guides available</p>
+
+    <div class="card-grid" id="card-grid">
+
+      <!-- ── Claude ── -->
+      <a class="guide-card" href="#" data-title="Claude Guide" data-keywords="claude anthropic ai assistant migration verification account mailbox inbox">
+        <div class="card-image claude">
+          <div class="card-logo">
+            <!-- Claude logo mark -->
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 6C12.268 6 6 12.268 6 20C6 27.732 12.268 34 20 34C27.732 34 34 27.732 34 20C34 12.268 27.732 6 20 6Z" fill="rgba(255,255,255,0.15)"/>
+              <path d="M14 20C14 16.686 16.686 14 20 14C23.314 14 26 16.686 26 20" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+              <path d="M20 20V28" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+              <circle cx="20" cy="20" r="2" fill="white"/>
+              <path d="M12 28C13.5 25 16.5 23 20 23C23.5 23 26.5 25 28 28" stroke="rgba(255,255,255,0.6)" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+        <div class="card-body">
+          <span class="card-tag claude">Claude · Anthropic</span>
+          <h2 class="card-title">Verify and set up your Claude access</h2>
+          <p class="card-desc">Access your AI assistant through your new migrated address. This guide covers sign-in, permission checks, and recovering your conversation history.</p>
+          <div class="card-footer">
+            <span class="card-meta">Estimated time: 5 min</span>
+            <span class="card-cta">
+              View guide
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="#0D8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </div>
+      </a>
+
+      <!-- ── Zoho ── -->
+      <a class="guide-card" href="#" data-title="Zoho Mail Guide" data-keywords="zoho mail mailbox inbox migration transfer alias folder filter contacts">
+        <div class="card-image zoho">
+          <div class="card-logo">
+            <!-- Zoho Z logo -->
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="9" y="10" width="22" height="4" rx="2" fill="white"/>
+              <rect x="9" y="26" width="22" height="4" rx="2" fill="white"/>
+              <path d="M9 14L31 26" stroke="white" stroke-width="2.4" stroke-linecap="round"/>
+              <circle cx="31" cy="12" r="3" fill="rgba(255,255,255,0.4)"/>
+              <circle cx="9" cy="28" r="3" fill="rgba(255,255,255,0.4)"/>
+            </svg>
+          </div>
+        </div>
+        <div class="card-body">
+          <span class="card-tag zoho">Zoho Mail</span>
+          <h2 class="card-title">Migrate and validate your Zoho Mail inbox</h2>
+          <p class="card-desc">Check that your emails, contacts, and filters have been successfully transferred to Zoho Mail. Follow the post-migration validation steps and configure your mail client.</p>
+          <div class="card-footer">
+            <span class="card-meta">Estimated time: 10 min</span>
+            <span class="card-cta">
+              View guide
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="#0D8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </div>
+      </a>
+
+      <!-- ── Google ── -->
+      <a class="guide-card" href="#" data-title="Google Workspace Guide" data-keywords="google gmail workspace drive calendar migration account transfer data archive sync">
+        <div class="card-image google">
+          <div class="card-logo">
+            <!-- Google G logo simplified -->
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M34 20.5C34 19.14 33.86 17.84 33.6 16.6H20V23.08H27.88C27.5 25.04 26.36 26.7 24.66 27.82V32.02H29.52C32.34 29.44 34 25.32 34 20.5Z" fill="rgba(255,255,255,0.85)"/>
+              <path d="M20 36C24.02 36 27.42 34.66 29.52 32.02L24.66 27.82C23.36 28.74 21.76 29.3 20 29.3C16.12 29.3 12.82 26.7 11.64 23.16H6.62V27.5C8.72 31.64 14 36 20 36Z" fill="rgba(255,255,255,0.65)"/>
+              <path d="M11.64 23.16C11.34 22.26 11.16 21.3 11.16 20.32C11.16 19.34 11.34 18.38 11.64 17.48V13.14H6.62C5.58 15.22 5 17.7 5 20.32C5 22.94 5.58 25.42 6.62 27.5L11.64 23.16Z" fill="rgba(255,255,255,0.5)"/>
+              <path d="M20 11.34C21.96 11.34 23.72 12.02 25.12 13.36L29.62 8.86C27.42 6.8 24.02 5.5 20 5.5C14 5.5 8.72 9.78 6.62 13.92L11.64 18.26C12.82 14.72 16.12 11.34 20 11.34Z" fill="white"/>
+            </svg>
+          </div>
+        </div>
+        <div class="card-body">
+          <span class="card-tag google">Google Workspace</span>
+          <h2 class="card-title">Access and verify your Google Workspace account</h2>
+          <p class="card-desc">Sign in to Gmail and Google Workspace with your new credentials, verify your data sync, and configure your devices for the migrated account.</p>
+          <div class="card-footer">
+            <span class="card-meta">Estimated time: 8 min</span>
+            <span class="card-cta">
+              View guide
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="#0D8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </div>
+      </a>
+
+    </div><!-- /card-grid -->
+
+    <!-- ── No results ── -->
+    <div id="no-results" role="alert" aria-live="polite">
+      <div class="no-results-icon">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="13" cy="13" r="9" stroke="#9AABBE" stroke-width="1.8"/>
+          <path d="M20 20L25 25" stroke="#9AABBE" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M10 13H16" stroke="#9AABBE" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M13 10V16" stroke="#9AABBE" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h2>No guide found</h2>
+      <p id="no-results-desc">No tutorial matches "<strong id="search-term"></strong>". If you can't find what you need, reach out to the support team.</p>
+      <a class="btn-mail" id="mail-link" href="mailto:support@company.com?subject=Missing%20guide%20%E2%80%93%20Mail%20migration">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="3.5" width="12" height="9" rx="1.5" stroke="white" stroke-width="1.5"/><path d="M2 5.5L8 9.5L14 5.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Email the support team
+      </a>
+    </div>
+
+  </main>
+
+  <!-- ═══ FOOTER ════════════════════════════════════════ -->
+  <footer>
+    Mail Migration Guide Directory — Internal documentation &nbsp;·&nbsp; Updated September 2026
+  </footer>
+
+  <!-- ═══ SEARCH LOGIC ══════════════════════════════════ -->
+  <script>
+    const input       = document.getElementById('search-input');
+    const clearBtn    = document.getElementById('search-clear');
+    const grid        = document.getElementById('card-grid');
+    const noResults   = document.getElementById('no-results');
+    const termEl      = document.getElementById('search-term');
+    const mailLink    = document.getElementById('mail-link');
+    const label       = document.getElementById('results-label');
+    const didYouMean  = document.getElementById('did-you-mean');
+    const cards       = Array.from(document.querySelectorAll('.guide-card'));
+
+    // ── Normalize: strip accents, lowercase ──────────────
+    function normalize(str) {
+      return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+    }
+
+    // ── Levenshtein distance ──────────────────────────────
+    function levenshtein(a, b) {
+      const m = a.length, n = b.length;
+      const dp = Array.from({ length: m + 1 }, (_, i) => [i]);
+      for (let j = 0; j <= n; j++) dp[0][j] = j;
+      for (let i = 1; i <= m; i++)
+        for (let j = 1; j <= n; j++)
+          dp[i][j] = a[i-1] === b[j-1]
+            ? dp[i-1][j-1]
+            : 1 + Math.min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]);
+      return dp[m][n];
+    }
+
+    // ── Build a flat vocabulary of all meaningful words ───
+    // Collect every unique keyword token across all cards
+    function buildVocabulary() {
+      const vocab = new Set();
+      cards.forEach(card => {
+        const words = normalize(card.dataset.keywords + ' ' + card.dataset.title).split(/\s+/);
+        words.forEach(w => { if (w.length >= 3) vocab.add(w); });
+      });
+      return Array.from(vocab);
+    }
+    const VOCAB = buildVocabulary();
+
+    // ── Find closest suggestion for a query token ─────────
+    // Returns the best matching word(s) if within a distance threshold
+    function findSuggestions(queryRaw) {
+      const query = normalize(queryRaw);
+      if (query.length < 2) return [];
+
+      // Score each vocab word; penalize very different lengths
+      const scored = VOCAB
+        .filter(w => Math.abs(w.length - query.length) <= 4) // skip obviously wrong lengths
+        .map(w => ({ word: w, dist: levenshtein(query, w) }))
+        .filter(({ dist }) => {
+          // Accept if edit distance ≤ 35% of query length (min 1, max 3)
+          const threshold = Math.min(3, Math.max(1, Math.floor(query.length * 0.4)));
+          return dist > 0 && dist <= threshold;
+        })
+        .sort((a, b) => a.dist - b.dist);
+
+      // Only return top 2 distinct suggestions
+      const seen = new Set();
+      return scored.filter(({ word }) => {
+        if (seen.has(word)) return false;
+        seen.add(word);
+        return true;
+      }).slice(0, 2).map(s => s.word);
+    }
+
+    // ── Highlight matching text in a card body ────────────
+    function highlight(node, query) {
+      const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, null);
+      const toReplace = [];
+      let textNode;
+      while ((textNode = walker.nextNode())) {
+        const parent = textNode.parentNode;
+        if (parent.tagName === 'MARK') continue;
+        const normText = normalize(textNode.textContent);
+        const idx = normText.indexOf(query);
+        if (idx !== -1) toReplace.push({ node: textNode, idx, len: query.length });
+      }
+      toReplace.reverse().forEach(({ node, idx, len }) => {
+        const before = node.textContent.slice(0, idx);
+        const match  = node.textContent.slice(idx, idx + len);
+        const after  = node.textContent.slice(idx + len);
+        const mark   = document.createElement('mark');
+        mark.textContent = match;
+        const frag = document.createDocumentFragment();
+        if (before) frag.appendChild(document.createTextNode(before));
+        frag.appendChild(mark);
+        if (after)  frag.appendChild(document.createTextNode(after));
+        node.parentNode.replaceChild(frag, node);
+      });
+    }
+
+    function clearHighlights(node) {
+      node.querySelectorAll('mark').forEach(m => {
+        const parent = m.parentNode;
+        parent.replaceChild(document.createTextNode(m.textContent), m);
+        parent.normalize();
+      });
+    }
+
+    // ── Render suggestion pills ───────────────────────────
+    function renderSuggestions(suggestions) {
+      // Remove old pills, keep the label span
+      didYouMean.querySelectorAll('.suggestion-pill').forEach(el => el.remove());
+
+      if (!suggestions.length) {
+        didYouMean.classList.remove('visible');
+        return;
+      }
+
+      suggestions.forEach(word => {
+        const pill = document.createElement('button');
+        pill.className = 'suggestion-pill';
+        pill.setAttribute('type', 'button');
+        pill.setAttribute('aria-label', `Search: ${word}`);
+        pill.innerHTML = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 6a5 5 0 1 0 10 0A5 5 0 0 0 1 6Zm3-1.5 2 1.5-2 1.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>${word}`;
+        pill.addEventListener('click', () => {
+          input.value = word;
+          hideSuggestions();
+          runSearch();
+          input.focus();
+        });
+        didYouMean.appendChild(pill);
+      });
+
+      didYouMean.classList.add('visible');
+    }
+
+    function hideSuggestions() {
+      didYouMean.querySelectorAll('.suggestion-pill').forEach(el => el.remove());
+      didYouMean.classList.remove('visible');
+    }
+
+    // ── Main search runner ────────────────────────────────
+    function runSearch() {
+      const raw   = input.value.trim();
+      const query = normalize(raw);
+
+      clearBtn.classList.toggle('visible', raw.length > 0);
+
+      if (!query) {
+        hideSuggestions();
+        cards.forEach(card => { clearHighlights(card.querySelector('.card-body')); card.style.display = ''; });
+        noResults.style.display = 'none';
+        grid.style.display      = '';
+        label.textContent       = `${cards.length} guides available`;
+        return;
+      }
+
+      let visible = 0;
+      cards.forEach(card => {
+        clearHighlights(card.querySelector('.card-body'));
+        const haystack = normalize(card.dataset.keywords + ' ' + card.dataset.title);
+        if (haystack.includes(query)) {
+          card.style.display = '';
+          highlight(card.querySelector('.card-body'), query);
+          visible++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      if (visible === 0) {
+        // No exact results → look for suggestions
+        noResults.style.display = 'block';
+        grid.style.display      = 'none';
+        label.textContent       = 'No results';
+        termEl.textContent      = raw;
+        mailLink.href = `mailto:support@company.com?subject=Missing%20guide%20%E2%80%93%20${encodeURIComponent(raw)}&body=Hello%2C%0A%0AI%20could%20not%20find%20a%20guide%20for%20%22${encodeURIComponent(raw)}%22%20in%20the%20mail%20migration%20directory.%0A%0AThank%20you%20for%20your%20help.`;
+
+        // Fuzzy suggestions: try each space-separated token in the query
+        const tokens = query.split(/\s+/).filter(t => t.length >= 2);
+        const allSuggestions = [];
+        tokens.forEach(token => {
+          findSuggestions(token).forEach(s => {
+            if (!allSuggestions.includes(s)) allSuggestions.push(s);
+          });
+        });
+        renderSuggestions(allSuggestions.slice(0, 2));
+      } else {
+        noResults.style.display = 'none';
+        grid.style.display      = '';
+        hideSuggestions();
+        label.textContent = `${visible} guide${visible > 1 ? 's' : ''} found`;
+      }
+    }
+
+    input.addEventListener('input', runSearch);
+    clearBtn.addEventListener('click', () => { input.value = ''; runSearch(); input.focus(); });
+
+    // Prevent default anchor navigation for demo cards
+    cards.forEach(card => card.addEventListener('click', e => e.preventDefault()));
+  </script>
+</body>
+</html>
