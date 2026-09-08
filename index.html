@@ -450,7 +450,7 @@
     <div class="card-grid" id="card-grid">
 
       <!-- ── Claude ── -->
-      <a class="guide-card" href="#" data-title="Claude Guide" data-keywords="claude anthropic ai assistant migration verification account mailbox inbox">
+      <a class="guide-card" href="guide-migration-claude.html" data-title="Claude Guide" data-keywords="claude anthropic ai assistant migration verification account mailbox inbox">
         <div class="card-image claude">
           <div class="card-logo">
             <!-- Claude logo mark -->
@@ -751,8 +751,12 @@
     input.addEventListener('input', runSearch);
     clearBtn.addEventListener('click', () => { input.value = ''; runSearch(); input.focus(); });
 
-    // Prevent default anchor navigation for demo cards
-    cards.forEach(card => card.addEventListener('click', e => e.preventDefault()));
+    // Prevent default navigation only for cards that are still placeholders (#)
+    cards.forEach(card => {
+      if (card.getAttribute('href') === '#') {
+        card.addEventListener('click', e => e.preventDefault());
+      }
+    });
   </script>
 </body>
 </html>
