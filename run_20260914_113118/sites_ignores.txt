@@ -1,0 +1,16 @@
+everstage	impossible	https://www.everstage.com/
+ringover	impossible	https://auth.ringover.com/oauth2/login
+dropbox	impossible	https://www.dropbox.com/login
+chatgpt	impossible	https://auth.openai.com/api/accounts/authorize?client_id=app_X8zY6vW2pQ9tR3dE7nK1jL5gH&scope=openid%20email%20profile%20offline_access%20model.request%20model.read%20organization.read%20organization.write&response_type=code&redirect_uri=https%3A%2F%2Fchatgpt.com%2Fapi%2Fauth%2Fcallback%2Fopenai&audience=https%3A%2F%2Fapi.openai.com%2Fv1&device_id=854866d8-c2ca-4c36-bebb-0d32dd9d9669&prompt=login&screen_hint=login_or_signup&ext-oai-did=854866d8-c2ca-4c36-bebb-0d32dd9d9669&auth_session_logging_id=a1683a0c-122f-4e9f-aeaa-ce8c81cb2715&login_hint=test-ct%40efficientip.com&connection=google-oauth2&ccaps=login_methods%20chatgpt_login_finalizer_v1&auth_return_target_category=chatgpt_home&state=Da02BYTZTFm2ta90pjTZ8yCetdiitsyjt7ykIvavnXA
+ryver	no_google	https://signup.ryver.com/login
+docebo	no_google	https://eip.docebosaas.com/learn
+payhawk	impossible	https://portal.payhawk.com/auth?error=server_error&error_description=Invalid+SAML+response+received%3A+PreSignUp+failed+with+error+No+user+found+for+external+identity..+
+claude	impossible	https://claude.ai/api/challenge_redirect?to=https%3A%2F%2Fclaude.ai%2Flogin
+goto	no_google	https://www.goto.com/
+whatsapp	no_google	https://web.whatsapp.com/
+tixeo	no_google	https://www.tixeo.com/en/secure-video-conferencing-solutions-tixeo/video-conferencing-service-tixeocloud/trial-tixeocloud/
+ente_auth	no_google	https://photos.ente.com/
+perk	impossible	https://app.travelperk.com/sso-error?error_code=sso_callback_user_creation_forbidden
+microsoft_365	no_google	https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=4765445b-32c6-49b0-83e6-1d93765276ca&redirect_uri=https%3A%2F%2Fm365.cloud.microsoft%2Flandingv2&response_type=code%20id_token&scope=openid%20profile%20offline_access%20https%3A%2F%2Fwww.office.com%2Fv2%2FOfficeHome.All&response_mode=form_post&nonce=639249835799327241.YzI4ZmQ1MWMtMGI3Mi00MmM0LThhZWYtZjIxNGZjZTg4NWIxNmM5NDRiN2EtYzBlNC00MzYxLTg5ZGItODdhNzcyYmNjZDll&client-request-id=2c911cfa-57e3-4543-bc1d-6fcad8f25004&state=aUF1VQ6awcUXszS-j6YLzbAP-Dgj8K9oz31cSWMCGmLLJpszHIQz7OxoUCWVAZdQcWmd6aaeB83lLGxIv41yyNK_679lYICr4i7fw_UxGMYs0EmKtM5zSMjvZ06HITz8xK3SGHgCMa7wovK0UahRSWHz2e7sRiuWchmDsUh0olHhii06IZ-Tb4SwzbtA5w7-q8jkNOLgN1Rr8sof9sRRGOWFf6gip7_vTiBvfN5C_BOemDVsAelYQKeWA8g5HuhL1dE1Yi-ZyTbVE8NwwnSq0jE31uACYyuv898_6jr1hrIsW7J2wzdl_mpykFyZfEc54aXijUJMsojOcKulX9dqNuFslNdDEa253ZMWPCdDpVAEkhKcrbg_NAHAuEOkaX2x2UN8M-gXYj4kERtm78I95C8GA6EbV754kXouGeRPjEs9mKpbn5GPI9EaOV6ARfzd&x-client-SKU=ID_NET8_0&x-client-ver=8.14.0.0
+issuetracker_eip	impossible	https://support.efficientip.com/issuetracker/plugins/OpenIDAuth/pages/redirect.php?code=Y1EBqTaGEsB9KWHk9jIdq017aQfcbzbZwMQszoqbT2J2u
+csa_demo_eip	impossible	chrome-error://chromewebdata/
