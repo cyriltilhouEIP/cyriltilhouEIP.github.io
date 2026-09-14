@@ -21,16 +21,18 @@
       --border:    #D8DFF0;
       --shadow:    0 2px 16px rgba(26,43,71,.10);
 
-      /* category palette */
       --cat-auto-bg:    #E0F5EA;
       --cat-auto-text:  #0D6B3F;
       --cat-auto-dot:   #1DB954;
+      --cat-auto-border:#A8DFC0;
       --cat-user-bg:    #FDF0E6;
       --cat-user-text:  #A0531A;
       --cat-user-dot:   #C87533;
-      --cat-admin-bg:   rgba(198,34,42,.10);
+      --cat-user-border:#EAC09A;
+      --cat-admin-bg:   #FEF0F0;
       --cat-admin-text: #9E1219;
       --cat-admin-dot:  #C6222A;
+      --cat-admin-border:#F0AAAD;
     }
 
     body {
@@ -50,10 +52,8 @@
       position: relative;
       overflow: hidden;
     }
-
     header::before {
-      content: '';
-      position: absolute;
+      content: ''; position: absolute;
       top: -80px; right: -80px;
       width: 320px; height: 320px;
       border-radius: 50%;
@@ -61,126 +61,83 @@
       pointer-events: none;
     }
     header::after {
-      content: '';
-      position: absolute;
+      content: ''; position: absolute;
       bottom: -60px; left: -60px;
       width: 220px; height: 220px;
       border-radius: 50%;
       background: rgba(240,165,0,.08);
       pointer-events: none;
     }
-
     .header-eyebrow {
       display: inline-block;
       background: rgba(13,138,138,.18);
       color: #5FD3D3;
-      font-family: 'Inter', sans-serif;
-      font-size: .72rem;
-      font-weight: 600;
+      font-size: .72rem; font-weight: 600;
       letter-spacing: .12em;
-      padding: 4px 14px;
-      border-radius: 20px;
+      padding: 4px 14px; border-radius: 20px;
       margin-bottom: 18px;
       text-transform: uppercase;
     }
-
     header h1 {
       font-family: 'Sora', sans-serif;
       font-size: clamp(1.9rem, 4vw, 2.8rem);
-      font-weight: 700;
-      color: var(--white);
-      line-height: 1.2;
-      max-width: 640px;
+      font-weight: 700; color: var(--white);
+      line-height: 1.2; max-width: 640px;
       margin: 0 auto 20px;
     }
-
     header h1 span { color: var(--amber); }
-
     header p {
-      font-size: 1rem;
-      line-height: 1.7;
+      font-size: 1rem; line-height: 1.7;
       color: rgba(255,255,255,.72);
-      max-width: 560px;
-      margin: 0 auto;
+      max-width: 560px; margin: 0 auto;
     }
 
-    /* ─── SEARCH BAR ─────────────────────────────────── */
+    /* ─── SEARCH ─────────────────────────────────────── */
     .search-wrapper {
-      max-width: 600px;
-      margin: 0 auto;
+      max-width: 600px; margin: 0 auto;
       padding: 40px 24px 0;
-      position: relative;
-      z-index: 10;
+      position: relative; z-index: 10;
     }
-
     .search-inner {
-      position: relative;
-      background: var(--white);
+      position: relative; background: var(--white);
       border-radius: 14px;
       box-shadow: 0 4px 24px rgba(26,43,71,.14);
-      display: flex;
-      align-items: center;
+      display: flex; align-items: center;
       border: 2px solid transparent;
       transition: border-color .2s;
     }
     .search-inner:focus-within { border-color: var(--teal); }
-
     .search-icon { position: absolute; left: 18px; pointer-events: none; }
-
     #search-input {
-      width: 100%;
-      border: none;
-      outline: none;
+      width: 100%; border: none; outline: none;
       padding: 16px 18px 16px 50px;
-      font-family: 'Inter', sans-serif;
-      font-size: .95rem;
-      color: var(--text);
-      background: transparent;
-      border-radius: 14px;
+      font-family: 'Inter', sans-serif; font-size: .95rem;
+      color: var(--text); background: transparent; border-radius: 14px;
     }
     #search-input::placeholder { color: #9AABBE; }
-
     .search-clear {
-      display: none;
-      position: absolute;
-      right: 16px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: #9AABBE;
-      font-size: 1.1rem;
-      line-height: 1;
-      padding: 4px;
-      border-radius: 50%;
+      display: none; position: absolute; right: 16px;
+      background: none; border: none; cursor: pointer;
+      color: #9AABBE; font-size: 1.1rem; line-height: 1;
+      padding: 4px; border-radius: 50%;
       transition: color .15s, background .15s;
     }
     .search-clear:hover { color: var(--navy); background: var(--bg); }
     .search-clear.visible { display: block; }
 
-    /* ─── DID YOU MEAN ───────────────────────────────── */
     #did-you-mean {
-      display: none;
-      margin-top: 10px;
-      font-size: .85rem;
-      color: var(--muted);
+      display: none; margin-top: 10px;
+      font-size: .85rem; color: var(--muted);
       animation: fadeSlideIn .18s ease;
     }
     #did-you-mean.visible { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
     #did-you-mean span { white-space: nowrap; }
-
     .suggestion-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      background: var(--white);
-      border: 1.5px solid var(--teal);
-      color: var(--teal);
-      font-size: .82rem;
-      font-weight: 600;
-      padding: 3px 12px 3px 9px;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: background .15s, color .15s;
+      display: inline-flex; align-items: center; gap: 5px;
+      background: var(--white); border: 1.5px solid var(--teal);
+      color: var(--teal); font-size: .82rem; font-weight: 600;
+      padding: 3px 12px 3px 9px; border-radius: 20px;
+      cursor: pointer; transition: background .15s, color .15s;
       white-space: nowrap;
     }
     .suggestion-pill:hover { background: var(--teal); color: var(--white); }
@@ -191,270 +148,217 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ─── FILTER TABS ────────────────────────────────── */
-    .filter-wrap {
-      max-width: 1100px;
-      margin: 40px auto 0;
-      padding: 0 24px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .filter-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-family: 'Inter', sans-serif;
-      font-size: .82rem;
-      font-weight: 600;
-      padding: 7px 16px;
-      border-radius: 99px;
-      border: 1.5px solid var(--border);
-      background: var(--white);
-      color: var(--muted);
-      cursor: pointer;
-      transition: border-color .15s, color .15s, background .15s, box-shadow .15s;
-      white-space: nowrap;
-    }
-    .filter-btn:hover {
-      border-color: var(--navy);
-      color: var(--navy);
-    }
-    .filter-btn.active {
-      background: var(--navy);
-      border-color: var(--navy);
-      color: var(--white);
-      box-shadow: 0 2px 10px rgba(26,43,71,.18);
-    }
-
-    .filter-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-    .filter-btn[data-filter="auto"]  .filter-dot { background: var(--cat-auto-dot); }
-    .filter-btn[data-filter="user"]  .filter-dot { background: var(--cat-user-dot); }
-    .filter-btn[data-filter="admin"] .filter-dot { background: var(--cat-admin-dot); }
-
-    .filter-count {
-      background: rgba(90,107,130,.12);
-      color: var(--muted);
-      font-size: .72rem;
-      padding: 1px 7px;
-      border-radius: 99px;
-    }
-    .filter-btn.active .filter-count {
-      background: rgba(255,255,255,.2);
-      color: rgba(255,255,255,.8);
-    }
-
-    /* ─── MAIN CONTENT ───────────────────────────────── */
+    /* ─── MAIN ───────────────────────────────────────── */
     main {
-      max-width: 1100px;
-      width: 100%;
+      max-width: 1100px; width: 100%;
       margin: 0 auto;
-      padding: 32px 24px 80px;
+      padding: 48px 24px 80px;
       flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
     }
 
-    .section-label {
-      font-size: .78rem;
-      font-weight: 600;
+    /* ─── ACCORDION SECTION ──────────────────────────── */
+    .acc-section {
+      background: var(--white);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      border: 1.5px solid var(--border);
+    }
+
+    .acc-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 22px 24px;
+      cursor: pointer;
+      user-select: none;
+      transition: background .15s;
+    }
+    .acc-header:hover { background: rgba(26,43,71,.025); }
+
+    /* colored left stripe */
+    .acc-section.user  { border-left: 4px solid var(--cat-user-dot); }
+    .acc-section.admin { border-left: 4px solid var(--cat-admin-dot); }
+    .acc-section.auto  { border-left: 4px solid var(--cat-auto-dot); }
+
+    .acc-icon {
+      flex-shrink: 0;
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 1px;
+    }
+    .acc-section.user  .acc-icon { background: var(--cat-user-bg); }
+    .acc-section.admin .acc-icon { background: var(--cat-admin-bg); }
+    .acc-section.auto  .acc-icon { background: var(--cat-auto-bg); }
+
+    .acc-title-wrap { flex: 1; min-width: 0; }
+
+    .acc-top {
+      display: flex; align-items: center; gap: 10px;
+      flex-wrap: wrap; margin-bottom: 5px;
+    }
+
+    .acc-title {
+      font-family: 'Sora', sans-serif;
+      font-size: 1rem; font-weight: 700;
+      color: var(--navy); line-height: 1.3;
+    }
+
+    .acc-badge {
+      font-size: .7rem; font-weight: 600;
+      padding: 2px 9px; border-radius: 99px;
+    }
+    .acc-section.user  .acc-badge { background: var(--cat-user-bg);  color: var(--cat-user-text); }
+    .acc-section.admin .acc-badge { background: var(--cat-admin-bg); color: var(--cat-admin-text); }
+    .acc-section.auto  .acc-badge { background: var(--cat-auto-bg);  color: var(--cat-auto-text); }
+
+    .acc-desc {
+      font-size: .845rem; line-height: 1.6;
       color: var(--muted);
-      letter-spacing: .06em;
-      margin-bottom: 24px;
     }
 
+    .acc-chevron {
+      flex-shrink: 0; color: var(--muted);
+      margin-top: 10px;
+      transition: transform .25s;
+    }
+    .acc-section.open .acc-chevron { transform: rotate(180deg); }
+
+    /* ── Body ── */
+    .acc-body {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      display: none;
+    }
+    .acc-section.open .acc-body { display: block; }
+
+    /* ─── CARD GRID ──────────────────────────────────── */
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 24px;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
     }
 
     /* ─── GUIDE CARD ─────────────────────────────────── */
     .guide-card {
-      background: var(--white);
-      border-radius: 16px;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
       overflow: hidden;
-      box-shadow: var(--shadow);
-      display: flex;
-      flex-direction: column;
-      transition: transform .2s, box-shadow .2s;
-      cursor: pointer;
-      text-decoration: none;
-      color: inherit;
+      display: flex; flex-direction: column;
+      transition: transform .2s, box-shadow .2s, border-color .2s;
+      cursor: pointer; text-decoration: none; color: inherit;
     }
     .guide-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 32px rgba(26,43,71,.16);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 24px rgba(26,43,71,.13);
+      border-color: transparent;
     }
-    .guide-card:focus-visible {
-      outline: 3px solid var(--teal);
-      outline-offset: 2px;
-    }
+    .guide-card:focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; }
 
     .card-image {
-      height: 128px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
+      height: 110px;
+      display: flex; align-items: center; justify-content: center;
     }
-
-    /* Per-brand gradients */
-    .card-image.adobe        { background: linear-gradient(135deg, #2A0000 0%, #8A0000 60%, #FF0000 100%); }
-    .card-image.community    { background: linear-gradient(135deg, #0D1F35 0%, #1A3A5C 60%, #2D6AA0 100%); }
-    .card-image.deezer       { background: linear-gradient(135deg, #1A0028 0%, #5E1875 60%, #A32CC4 100%); }
-    .card-image.drawio       { background: linear-gradient(135deg, #2A1200 0%, #7A3A00 60%, #F08705 100%); }
-    .card-image.gitlab       { background: linear-gradient(135deg, #1A0A00 0%, #7A2800 60%, #FC6D26 100%); }
-    .card-image.gitlab-eip   { background: linear-gradient(135deg, #1A0A00 0%, #7A2800 60%, #E24329 100%); }
-    .card-image.google       { background: linear-gradient(135deg, #0A1929 0%, #0D4C9C 60%, #1A73E8 100%); }
-    .card-image.lusha        { background: linear-gradient(135deg, #040D2A 0%, #0F2A7A 60%, #2562F4 100%); }
-    .card-image.postman      { background: linear-gradient(135deg, #2A0C00 0%, #8A2A00 60%, #FF6C37 100%); }
-    .card-image.spotify      { background: linear-gradient(135deg, #001A0A 0%, #0A5C28 60%, #1DB954 100%); }
-    .card-image.claude       { background: linear-gradient(135deg, #2C1A0E 0%, #6B3010 60%, #C87533 100%); }
-    .card-image.webex        { background: linear-gradient(135deg, #001A28 0%, #005A7A 60%, #00BEF3 100%); }
-    .card-image.zoho         { background: linear-gradient(135deg, #1A0505 0%, #7A0F14 60%, #C6222A 100%); }
-    .card-image.zoom         { background: linear-gradient(135deg, #041429 0%, #0A3D8A 60%, #2D8CFF 100%); }
-    .card-image.pmapp        { background: linear-gradient(135deg, #0D1F35 0%, #1C3A60 60%, #3A6EA5 100%); }
-    .card-image.techkb       { background: linear-gradient(135deg, #0D1F35 0%, #1C3A60 60%, #3A6EA5 100%); }
+    .card-image.adobe      { background: linear-gradient(135deg, #2A0000 0%, #8A0000 60%, #FF0000 100%); }
+    .card-image.community  { background: linear-gradient(135deg, #0D1F35 0%, #1A3A5C 60%, #2D6AA0 100%); }
+    .card-image.deezer     { background: linear-gradient(135deg, #1A0028 0%, #5E1875 60%, #A32CC4 100%); }
+    .card-image.drawio     { background: linear-gradient(135deg, #2A1200 0%, #7A3A00 60%, #F08705 100%); }
+    .card-image.gitlab     { background: linear-gradient(135deg, #1A0A00 0%, #7A2800 60%, #FC6D26 100%); }
+    .card-image.gitlab-eip { background: linear-gradient(135deg, #1A0A00 0%, #7A2800 60%, #E24329 100%); }
+    .card-image.google     { background: linear-gradient(135deg, #0A1929 0%, #0D4C9C 60%, #1A73E8 100%); }
+    .card-image.lusha      { background: linear-gradient(135deg, #040D2A 0%, #0F2A7A 60%, #2562F4 100%); }
+    .card-image.postman    { background: linear-gradient(135deg, #2A0C00 0%, #8A2A00 60%, #FF6C37 100%); }
+    .card-image.spotify    { background: linear-gradient(135deg, #001A0A 0%, #0A5C28 60%, #1DB954 100%); }
+    .card-image.claude     { background: linear-gradient(135deg, #2C1A0E 0%, #6B3010 60%, #C87533 100%); }
+    .card-image.webex      { background: linear-gradient(135deg, #001A28 0%, #005A7A 60%, #00BEF3 100%); }
+    .card-image.zoho       { background: linear-gradient(135deg, #1A0505 0%, #7A0F14 60%, #C6222A 100%); }
+    .card-image.zoom       { background: linear-gradient(135deg, #041429 0%, #0A3D8A 60%, #2D8CFF 100%); }
+    .card-image.pmapp      { background: linear-gradient(135deg, #0D1F35 0%, #1C3A60 60%, #3A6EA5 100%); }
+    .card-image.techkb     { background: linear-gradient(135deg, #0D1F35 0%, #1C3A60 60%, #3A6EA5 100%); }
 
     .card-logo {
-      width: 60px;
-      height: 60px;
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      width: 52px; height: 52px; border-radius: 13px;
+      display: flex; align-items: center; justify-content: center;
       background: rgba(255,255,255,.15);
       backdrop-filter: blur(4px);
       border: 1.5px solid rgba(255,255,255,.22);
-      font-family: 'Sora', sans-serif;
-      font-weight: 700;
-      font-size: 1.2rem;
-      color: rgba(255,255,255,.9);
+      font-family: 'Sora', sans-serif; font-weight: 700;
+      font-size: 1.05rem; color: rgba(255,255,255,.92);
     }
 
     .card-body {
-      padding: 18px 20px 20px;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
+      padding: 16px 18px 18px;
+      display: flex; flex-direction: column; flex: 1;
     }
-
-    /* category badge */
-    .card-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font-size: .67rem;
-      font-weight: 600;
-      letter-spacing: .07em;
-      padding: 3px 10px;
-      border-radius: 20px;
-      margin-bottom: 10px;
-      text-transform: uppercase;
-      width: fit-content;
-    }
-    .card-tag-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-    .card-tag.auto  { background: var(--cat-auto-bg);  color: var(--cat-auto-text); }
-    .card-tag.auto  .card-tag-dot { background: var(--cat-auto-dot); }
-    .card-tag.user  { background: var(--cat-user-bg);  color: var(--cat-user-text); }
-    .card-tag.user  .card-tag-dot { background: var(--cat-user-dot); }
-    .card-tag.admin { background: var(--cat-admin-bg); color: var(--cat-admin-text); }
-    .card-tag.admin .card-tag-dot { background: var(--cat-admin-dot); }
 
     .card-title {
       font-family: 'Sora', sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--navy);
-      line-height: 1.3;
-      margin-bottom: 6px;
+      font-size: .95rem; font-weight: 700;
+      color: var(--navy); line-height: 1.3; margin-bottom: 6px;
     }
 
     .card-desc {
-      font-size: .855rem;
-      color: var(--muted);
-      line-height: 1.6;
-      flex: 1;
+      font-size: .835rem; color: var(--muted);
+      line-height: 1.6; flex: 1;
     }
 
     .card-footer {
-      display: flex;
-      align-items: center;
+      display: flex; align-items: center;
       justify-content: space-between;
-      margin-top: 16px;
-      padding-top: 14px;
+      margin-top: 14px; padding-top: 12px;
       border-top: 1px solid var(--border);
     }
-
-    .card-meta { font-size: .74rem; color: #9AABBE; }
-
+    .card-meta { font-size: .73rem; color: #9AABBE; }
     .card-cta {
-      font-size: .8rem;
-      font-weight: 600;
+      font-size: .78rem; font-weight: 600;
       color: var(--teal);
-      display: flex;
-      align-items: center;
-      gap: 4px;
+      display: flex; align-items: center; gap: 4px;
     }
     .card-cta svg { transition: transform .2s; }
     .guide-card:hover .card-cta svg { transform: translateX(3px); }
 
-    /* ─── NO RESULTS ─────────────────────────────────── */
-    #no-results {
+    /* hidden via search */
+    .guide-card[hidden] { display: none !important; }
+
+    /* section empty state */
+    .acc-empty {
       display: none;
       text-align: center;
-      padding: 64px 24px;
-    }
-
-    .no-results-icon {
-      width: 64px; height: 64px;
-      border-radius: 50%;
-      background: var(--white);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 24px;
-      box-shadow: var(--shadow);
-    }
-
-    #no-results h2 {
-      font-family: 'Sora', sans-serif;
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--navy);
-      margin-bottom: 10px;
-    }
-
-    #no-results p {
+      padding: 32px 16px;
       color: var(--muted);
-      font-size: .9rem;
-      line-height: 1.6;
-      max-width: 380px;
-      margin: 0 auto 28px;
-    }
-
-    .btn-mail {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--navy);
-      color: var(--white);
-      font-family: 'Inter', sans-serif;
       font-size: .88rem;
-      font-weight: 600;
-      text-decoration: none;
-      padding: 12px 24px;
-      border-radius: 10px;
+    }
+    .acc-section[data-empty="true"] .acc-empty { display: block; }
+    .acc-section[data-empty="true"] .card-grid { display: none; }
+
+    /* ─── GLOBAL NO RESULTS ──────────────────────────── */
+    #no-results {
+      display: none; text-align: center; padding: 48px 24px;
+    }
+    .no-results-icon {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px; box-shadow: var(--shadow);
+    }
+    #no-results h2 {
+      font-family: 'Sora', sans-serif; font-size: 1.2rem;
+      font-weight: 700; color: var(--navy); margin-bottom: 8px;
+    }
+    #no-results p {
+      color: var(--muted); font-size: .88rem; line-height: 1.6;
+      max-width: 360px; margin: 0 auto 24px;
+    }
+    .btn-mail {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--navy); color: var(--white);
+      font-size: .88rem; font-weight: 600; text-decoration: none;
+      padding: 12px 24px; border-radius: 10px;
       transition: background .2s, transform .15s;
     }
     .btn-mail:hover { background: var(--teal); transform: translateY(-1px); }
@@ -463,28 +367,25 @@
     footer {
       background: var(--navy-deep);
       color: rgba(255,255,255,.45);
-      text-align: center;
-      padding: 24px;
-      font-size: .8rem;
+      text-align: center; padding: 24px; font-size: .8rem;
     }
 
     /* ─── HIGHLIGHT ──────────────────────────────────── */
     mark {
-      background: rgba(240,165,0,.28);
-      color: inherit;
-      border-radius: 2px;
-      padding: 0 1px;
+      background: rgba(240,165,0,.28); color: inherit;
+      border-radius: 2px; padding: 0 1px;
     }
 
     /* ─── RESPONSIVE ─────────────────────────────────── */
-    @media (max-width: 600px) {
-      header { padding: 40px 20px 40px; }
+    @media (max-width: 640px) {
+      header { padding: 40px 20px; }
+      main { padding: 32px 16px 60px; }
+      .acc-header { padding: 18px 18px; }
+      .acc-body { padding: 18px; }
       .card-grid { grid-template-columns: 1fr; }
-      .filter-wrap { padding: 0 16px; }
     }
-
     @media (prefers-reduced-motion: reduce) {
-      .guide-card, .btn-mail { transition: none; }
+      .guide-card, .btn-mail, .acc-chevron { transition: none; }
     }
   </style>
 </head>
@@ -518,301 +419,319 @@
     </div>
   </div>
 
-  <!-- ═══ FILTER TABS ══════════════════════════════════ -->
-  <div class="filter-wrap" id="filter-wrap">
-    <button class="filter-btn active" data-filter="all">
-      All
-      <span class="filter-count" id="count-all">16</span>
-    </button>
-    <button class="filter-btn" data-filter="user">
-      <span class="filter-dot"></span>
-      Update email requis
-      <span class="filter-count" id="count-user">4</span>
-    </button>
-    <button class="filter-btn" data-filter="auto">
-      <span class="filter-dot"></span>
-      Update email automatique
-      <span class="filter-count" id="count-auto">10</span>
-    </button>
-    <button class="filter-btn" data-filter="admin">
-      <span class="filter-dot"></span>
-      Action administrateur requise
-      <span class="filter-count" id="count-admin">2</span>
-    </button>
-  </div>
-
   <!-- ═══ MAIN ══════════════════════════════════════════ -->
   <main>
-    <p class="section-label" id="results-label">16 guides available</p>
 
-    <div class="card-grid" id="card-grid">
-
-      <!-- ══ UPDATE EMAIL REQUIS (tutorial) ══ -->
-
-      <!-- Claude -->
-      <a class="guide-card" href="guide-migration-claude.html" data-title="Claude" data-keywords="claude anthropic ai assistant migration verification account" data-category="user">
-        <div class="card-image claude">
-          <div class="card-logo">Cl</div>
+    <!-- ══ 1. UPDATE EMAIL REQUIS ══════════════════════ -->
+    <section class="acc-section user open" id="sec-user">
+      <div class="acc-header" onclick="toggleSection('sec-user')">
+        <div class="acc-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <circle cx="10" cy="10" r="8" stroke="#C87533" stroke-width="1.7"/>
+            <path d="M10 6.5V10.5" stroke="#C87533" stroke-width="1.7" stroke-linecap="round"/>
+            <circle cx="10" cy="13" r=".9" fill="#C87533"/>
+          </svg>
         </div>
-        <div class="card-body">
-          <span class="card-tag user"><span class="card-tag-dot"></span>Update email requis</span>
-          <h2 class="card-title">Claude — Anthropic</h2>
-          <p class="card-desc">Accédez à votre assistant IA avec votre nouvelle adresse migrée. Ce guide couvre la connexion et la vérification de votre espace de travail.</p>
-          <div class="card-footer">
-            <span class="card-meta">~5 min</span>
-            <span class="card-cta">View guide <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="#0D8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div class="acc-title-wrap">
+          <div class="acc-top">
+            <span class="acc-title">Update email requis</span>
+            <span class="acc-badge" id="badge-user">4 apps</span>
           </div>
+          <p class="acc-desc">Ces applications ne prennent pas en charge la migration automatique. Vous devez vous connecter et mettre à jour votre adresse email manuellement dans les paramètres de votre compte.</p>
         </div>
-      </a>
+        <svg class="acc-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M5 7.5L10 12.5L15 7.5" stroke="#5A6B82" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="acc-body">
+        <div class="card-grid" id="grid-user">
 
-      <!-- Webex -->
-      <a class="guide-card" href="run_20260914_113118/webex-tutorial.html" data-title="Webex" data-keywords="webex cisco video conference meeting collaboration migration email update" data-category="user">
-        <div class="card-image webex">
-          <div class="card-logo">Wx</div>
+          <!-- Claude -->
+          <a class="guide-card" href="guide-migration-claude.html"
+             data-title="Claude" data-keywords="claude anthropic ai assistant migration verification account">
+            <div class="card-image claude"><div class="card-logo">Cl</div></div>
+            <div class="card-body">
+              <h2 class="card-title">Claude — Anthropic</h2>
+              <p class="card-desc">Accédez à votre assistant IA avec votre nouvelle adresse migrée. Ce guide couvre la connexion et la vérification de votre espace de travail.</p>
+              <div class="card-footer">
+                <span class="card-meta">~5 min</span>
+                <span class="card-cta">View guide <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="#0D8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Webex -->
+          <a class="guide-card" href="run_20260914_113118/webex-tutorial.html"
+             data-title="Webex" data-keywords="webex cisco video conference meeting collaboration migration email update">
+            <div class="card-image webex"><div class="card-logo">Wx</div></div>
+            <div class="card-body">
+              <h2 class="card-title">Webex — Cisco</h2>
+              <p class="card-desc">Mettez à jour votre adresse email dans Webex pour continuer à accéder aux réunions et à la collaboration.</p>
+              <div class="card-footer">
+                <span class="card-meta">~5 min</span>
+                <span class="card-cta">View guide <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="#0D8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Zoho -->
+          <a class="guide-card" href="run_20260914_113118/zoho-tutorial.html"
+             data-title="Zoho Mail" data-keywords="zoho mail mailbox inbox migration transfer contacts email update">
+            <div class="card-image zoho"><div class="card-logo">Zo</div></div>
+            <div class="card-body">
+              <h2 class="card-title">Zoho Mail</h2>
+              <p class="card-desc">Migrez et validez votre boîte mail Zoho. Vérifiez que vos emails, contacts et filtres ont bien été transférés.</p>
+              <div class="card-footer">
+                <span class="card-meta">~10 min</span>
+                <span class="card-cta">View guide <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="#0D8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Zoom -->
+          <a class="guide-card" href="run_20260914_113118/zoom-tutorial.html"
+             data-title="Zoom" data-keywords="zoom video meeting conference call migration email update account">
+            <div class="card-image zoom"><div class="card-logo">Zm</div></div>
+            <div class="card-body">
+              <h2 class="card-title">Zoom</h2>
+              <p class="card-desc">Mettez à jour votre compte Zoom avec votre nouvelle adresse pour continuer à accéder aux réunions.</p>
+              <div class="card-footer">
+                <span class="card-meta">~5 min</span>
+                <span class="card-cta">View guide <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="#0D8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+          </a>
+
         </div>
-        <div class="card-body">
-          <span class="card-tag user"><span class="card-tag-dot"></span>Update email requis</span>
-          <h2 class="card-title">Webex — Cisco</h2>
-          <p class="card-desc">Mettez à jour votre adresse email dans Webex pour continuer à accéder aux réunions et à la collaboration.</p>
-          <div class="card-footer">
-            <span class="card-meta">~5 min</span>
-            <span class="card-cta">View guide <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="#0D8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <p class="acc-empty">Aucun résultat dans cette catégorie.</p>
+      </div>
+    </section>
+
+    <!-- ══ 2. ACTION ADMINISTRATEUR REQUISE ════════════ -->
+    <section class="acc-section admin open" id="sec-admin">
+      <div class="acc-header" onclick="toggleSection('sec-admin')">
+        <div class="acc-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M10 3L12.5 7.5H17L13.5 10.5L15 15L10 12L5 15L6.5 10.5L3 7.5H7.5L10 3Z" stroke="#C6222A" stroke-width="1.6" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="acc-title-wrap">
+          <div class="acc-top">
+            <span class="acc-title">Action administrateur requise</span>
+            <span class="acc-badge" id="badge-admin">2 apps</span>
           </div>
+          <p class="acc-desc">La mise à jour de ces comptes ne peut pas être effectuée par l'utilisateur. Un administrateur du site web doit intervenir pour appliquer les changements nécessaires. Consultez le guide pour soumettre la demande.</p>
         </div>
-      </a>
+        <svg class="acc-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M5 7.5L10 12.5L15 7.5" stroke="#5A6B82" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="acc-body">
+        <div class="card-grid" id="grid-admin">
 
-      <!-- Zoho -->
-      <a class="guide-card" href="run_20260914_113118/zoho-tutorial.html" data-title="Zoho Mail" data-keywords="zoho mail mailbox inbox migration transfer alias folder filter contacts" data-category="user">
-        <div class="card-image zoho">
-          <div class="card-logo">Zo</div>
+          <!-- PM App EIP -->
+          <a class="guide-card" href="run_20260914_113118/pmapp_eip-manual.html"
+             data-title="PM App EIP" data-keywords="pmapp eip efficientip project management pm tool internal manual admin">
+            <div class="card-image pmapp"><div class="card-logo">PM</div></div>
+            <div class="card-body">
+              <h2 class="card-title">PM App EfficientIP</h2>
+              <p class="card-desc">La mise à jour de ce compte nécessite une action de l'administrateur du site. Consultez le guide pour soumettre la demande.</p>
+              <div class="card-footer">
+                <span class="card-meta">Action requise</span>
+                <span class="card-cta">View guide <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="#0D8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+          </a>
+
+          <!-- TechKB EIP -->
+          <a class="guide-card" href="run_20260914_113118/techkb_eip-manual.html"
+             data-title="TechKB EIP" data-keywords="techkb eip efficientip knowledge base technical documentation internal manual admin">
+            <div class="card-image techkb"><div class="card-logo">KB</div></div>
+            <div class="card-body">
+              <h2 class="card-title">TechKB EfficientIP</h2>
+              <p class="card-desc">L'accès à la base de connaissances technique requiert une action de l'administrateur. Suivez les étapes du guide.</p>
+              <div class="card-footer">
+                <span class="card-meta">Action requise</span>
+                <span class="card-cta">View guide <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="#0D8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+          </a>
+
         </div>
-        <div class="card-body">
-          <span class="card-tag user"><span class="card-tag-dot"></span>Update email requis</span>
-          <h2 class="card-title">Zoho Mail</h2>
-          <p class="card-desc">Migrez et validez votre boîte mail Zoho. Vérifiez que vos emails, contacts et filtres ont bien été transférés.</p>
-          <div class="card-footer">
-            <span class="card-meta">~10 min</span>
-            <span class="card-cta">View guide <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="#0D8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <p class="acc-empty">Aucun résultat dans cette catégorie.</p>
+      </div>
+    </section>
+
+    <!-- ══ 3. UPDATE EMAIL AUTOMATIQUE ════════════════ -->
+    <section class="acc-section auto open" id="sec-auto">
+      <div class="acc-header" onclick="toggleSection('sec-auto')">
+        <div class="acc-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <circle cx="10" cy="10" r="8" stroke="#1DB954" stroke-width="1.7"/>
+            <path d="M6.5 10.5L9 13L13.5 8" stroke="#1DB954" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="acc-title-wrap">
+          <div class="acc-top">
+            <span class="acc-title">Update email automatique</span>
+            <span class="acc-badge" id="badge-auto">10 apps</span>
           </div>
+          <p class="acc-desc">Ces applications ont migré votre compte automatiquement via SSO. Aucune action manuelle n'est requise — consultez simplement le guide pour vérifier que votre accès est correctement configuré.</p>
         </div>
-      </a>
+        <svg class="acc-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M5 7.5L10 12.5L15 7.5" stroke="#5A6B82" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="acc-body">
+        <div class="card-grid" id="grid-auto">
 
-      <!-- Zoom -->
-      <a class="guide-card" href="run_20260914_113118/zoom-tutorial.html" data-title="Zoom" data-keywords="zoom video meeting conference call migration email update account" data-category="user">
-        <div class="card-image zoom">
-          <div class="card-logo">Zm</div>
-        </div>
-        <div class="card-body">
-          <span class="card-tag user"><span class="card-tag-dot"></span>Update email requis</span>
-          <h2 class="card-title">Zoom</h2>
-          <p class="card-desc">Mettez à jour votre compte Zoom avec votre nouvelle adresse pour continuer à accéder aux réunions.</p>
-          <div class="card-footer">
-            <span class="card-meta">~5 min</span>
-            <span class="card-cta">View guide <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="#0D8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          </div>
-        </div>
-      </a>
+          <!-- Adobe -->
+          <a class="guide-card" href="run_20260914_113118/adobe-ok.html"
+             data-title="Adobe" data-keywords="adobe creative cloud photoshop illustrator acrobat sso migration automatic">
+            <div class="card-image adobe"><div class="card-logo">Ae</div></div>
+            <div class="card-body">
+              <h2 class="card-title">Adobe Creative Cloud</h2>
+              <p class="card-desc">Votre compte Adobe a été migré automatiquement via SSO. Vérifiez votre accès aux applications Creative Cloud.</p>
+              <div class="card-footer">
+                <span class="card-meta">~3 min</span>
+                <span class="card-cta">View guide <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="#0D8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+          </a>
 
-      <!-- ══ UPDATE EMAIL AUTOMATIQUE (ok) ══ -->
+          <!-- EfficientIP Community -->
+          <a class="guide-card" href="run_20260914_113118/community_eip-ok.html"
+             data-title="EfficientIP Community" data-keywords="efficientip community eip portal forum knowledge sso migration automatic">
+            <div class="card-image community"><div class="card-logo">EC</div></div>
+            <div class="card-body">
+              <h2 class="card-title">EfficientIP Community</h2>
+              <p class="card-desc">L'accès au portail communautaire EfficientIP a été migré automatiquement avec votre nouvelle adresse.</p>
+              <div class="card-footer">
+                <span class="card-meta">~3 min</span>
+                <span class="card-cta">View guide <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="#0D8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+          </a>
 
-      <!-- Adobe -->
-      <a class="guide-card" href="run_20260914_113118/adobe-ok.html" data-title="Adobe" data-keywords="adobe creative cloud photoshop illustrator acrobat sso migration automatic" data-category="auto">
-        <div class="card-image adobe">
-          <div class="card-logo">Ae</div>
-        </div>
-        <div class="card-body">
-          <span class="card-tag auto"><span class="card-tag-dot"></span>Update email automatique</span>
-          <h2 class="card-title">Adobe Creative Cloud</h2>
-          <p class="card-desc">Votre compte Adobe a été migré automatiquement via SSO. Vérifiez votre accès aux applications Creative Cloud.</p>
-          <div class="card-footer">
-            <span class="card-meta">~3 min</span>
-            <span class="card-cta">View guide <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="#0D8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          </div>
-        </div>
-      </a>
+          <!-- Deezer -->
+          <a class="guide-card" href="run_20260914_113118/deezer-ok.html"
+             data-title="Deezer" data-keywords="deezer music streaming audio sso migration automatic account">
+            <div class="card-image deezer"><div class="card-logo">Dz</div></div>
+            <div class="card-body">
+              <h2 class="card-title">Deezer</h2>
+              <p class="card-desc">Votre compte Deezer a été mis à jour automatiquement. Vérifiez que votre accès et vos playlists sont intacts.</p>
+              <div class="card-footer">
+                <span class="card-meta">~3 min</span>
+                <span class="card-cta">View guide <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="#0D8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+          </a>
 
-      <!-- EfficientIP Community -->
-      <a class="guide-card" href="run_20260914_113118/community_eip-ok.html" data-title="EfficientIP Community" data-keywords="efficientip community eip portal forum knowledge sso migration automatic" data-category="auto">
-        <div class="card-image community">
-          <div class="card-logo">EC</div>
-        </div>
-        <div class="card-body">
-          <span class="card-tag auto"><span class="card-tag-dot"></span>Update email automatique</span>
-          <h2 class="card-title">EfficientIP Community</h2>
-          <p class="card-desc">L'accès au portail communautaire EfficientIP a été migré automatiquement avec votre nouvelle adresse.</p>
-          <div class="card-footer">
-            <span class="card-meta">~3 min</span>
-            <span class="card-cta">View guide <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="#0D8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          </div>
-        </div>
-      </a>
+          <!-- Draw.io -->
+          <a class="guide-card" href="run_20260914_113118/drawio-ok.html"
+             data-title="Draw.io" data-keywords="drawio diagrams net diagram chart flow architecture sso migration automatic">
+            <div class="card-image drawio"><div class="card-logo">Di</div></div>
+            <div class="card-body">
+              <h2 class="card-title">Draw.io (diagrams.net)</h2>
+              <p class="card-desc">Votre accès Draw.io est disponible via votre nouveau compte Google Workspace. Vérifiez vos diagrammes.</p>
+              <div class="card-footer">
+                <span class="card-meta">~3 min</span>
+                <span class="card-cta">View guide <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="#0D8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+          </a>
 
-      <!-- Deezer -->
-      <a class="guide-card" href="run_20260914_113118/deezer-ok.html" data-title="Deezer" data-keywords="deezer music streaming audio sso migration automatic account" data-category="auto">
-        <div class="card-image deezer">
-          <div class="card-logo">Dz</div>
-        </div>
-        <div class="card-body">
-          <span class="card-tag auto"><span class="card-tag-dot"></span>Update email automatique</span>
-          <h2 class="card-title">Deezer</h2>
-          <p class="card-desc">Votre compte Deezer a été mis à jour automatiquement. Vérifiez que votre accès et vos playlists sont intacts.</p>
-          <div class="card-footer">
-            <span class="card-meta">~3 min</span>
-            <span class="card-cta">View guide <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="#0D8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          </div>
-        </div>
-      </a>
+          <!-- GitLab -->
+          <a class="guide-card" href="run_20260914_113118/gitlab-ok.html"
+             data-title="GitLab" data-keywords="gitlab git repository code version control sso migration automatic">
+            <div class="card-image gitlab"><div class="card-logo">GL</div></div>
+            <div class="card-body">
+              <h2 class="card-title">GitLab</h2>
+              <p class="card-desc">Votre compte GitLab a été migré automatiquement. Vérifiez l'accès à vos dépôts et projets.</p>
+              <div class="card-footer">
+                <span class="card-meta">~3 min</span>
+                <span class="card-cta">View guide <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="#0D8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+          </a>
 
-      <!-- Draw.io -->
-      <a class="guide-card" href="run_20260914_113118/drawio-ok.html" data-title="Draw.io" data-keywords="drawio diagrams net diagram chart flow architecture sso migration automatic" data-category="auto">
-        <div class="card-image drawio">
-          <div class="card-logo">Di</div>
-        </div>
-        <div class="card-body">
-          <span class="card-tag auto"><span class="card-tag-dot"></span>Update email automatique</span>
-          <h2 class="card-title">Draw.io (diagrams.net)</h2>
-          <p class="card-desc">Votre accès Draw.io est disponible via votre nouveau compte Google Workspace. Vérifiez vos diagrammes.</p>
-          <div class="card-footer">
-            <span class="card-meta">~3 min</span>
-            <span class="card-cta">View guide <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="#0D8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          </div>
-        </div>
-      </a>
+          <!-- GitLab EIP -->
+          <a class="guide-card" href="run_20260914_113118/gitlab_eip-ok.html"
+             data-title="GitLab EIP" data-keywords="gitlab eip efficientip git repository code internal sso migration automatic">
+            <div class="card-image gitlab-eip"><div class="card-logo">GE</div></div>
+            <div class="card-body">
+              <h2 class="card-title">GitLab EfficientIP</h2>
+              <p class="card-desc">L'instance GitLab interne EfficientIP a été migrée automatiquement. Vérifiez l'accès à vos projets internes.</p>
+              <div class="card-footer">
+                <span class="card-meta">~3 min</span>
+                <span class="card-cta">View guide <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="#0D8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+          </a>
 
-      <!-- GitLab -->
-      <a class="guide-card" href="run_20260914_113118/gitlab-ok.html" data-title="GitLab" data-keywords="gitlab git repository code version control sso migration automatic" data-category="auto">
-        <div class="card-image gitlab">
-          <div class="card-logo">GL</div>
-        </div>
-        <div class="card-body">
-          <span class="card-tag auto"><span class="card-tag-dot"></span>Update email automatique</span>
-          <h2 class="card-title">GitLab</h2>
-          <p class="card-desc">Votre compte GitLab a été migré automatiquement. Vérifiez l'accès à vos dépôts et projets.</p>
-          <div class="card-footer">
-            <span class="card-meta">~3 min</span>
-            <span class="card-cta">View guide <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="#0D8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          </div>
-        </div>
-      </a>
+          <!-- Google Workspace -->
+          <a class="guide-card" href="run_20260914_113118/google_workspace-ok.html"
+             data-title="Google Workspace" data-keywords="google gmail workspace drive calendar meet docs sheets migration automatic sso">
+            <div class="card-image google"><div class="card-logo">GW</div></div>
+            <div class="card-body">
+              <h2 class="card-title">Google Workspace</h2>
+              <p class="card-desc">Gmail, Drive, Calendar et Meet sont accessibles avec votre nouvelle adresse. Vérifiez la synchronisation de vos données.</p>
+              <div class="card-footer">
+                <span class="card-meta">~5 min</span>
+                <span class="card-cta">View guide <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="#0D8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+          </a>
 
-      <!-- GitLab EIP -->
-      <a class="guide-card" href="run_20260914_113118/gitlab_eip-ok.html" data-title="GitLab EIP" data-keywords="gitlab eip efficientip git repository code internal sso migration automatic" data-category="auto">
-        <div class="card-image gitlab-eip">
-          <div class="card-logo">GE</div>
-        </div>
-        <div class="card-body">
-          <span class="card-tag auto"><span class="card-tag-dot"></span>Update email automatique</span>
-          <h2 class="card-title">GitLab EfficientIP</h2>
-          <p class="card-desc">L'instance GitLab interne EfficientIP a été migrée automatiquement. Vérifiez l'accès à vos projets internes.</p>
-          <div class="card-footer">
-            <span class="card-meta">~3 min</span>
-            <span class="card-cta">View guide <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="#0D8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          </div>
-        </div>
-      </a>
+          <!-- Lusha -->
+          <a class="guide-card" href="run_20260914_113118/lusha-ok.html"
+             data-title="Lusha" data-keywords="lusha leads contacts prospecting sales sso migration automatic">
+            <div class="card-image lusha"><div class="card-logo">Lu</div></div>
+            <div class="card-body">
+              <h2 class="card-title">Lusha</h2>
+              <p class="card-desc">Votre compte Lusha a été migré automatiquement via SSO. Vérifiez l'accès à vos contacts et vos crédits.</p>
+              <div class="card-footer">
+                <span class="card-meta">~3 min</span>
+                <span class="card-cta">View guide <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="#0D8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+          </a>
 
-      <!-- Google Workspace -->
-      <a class="guide-card" href="run_20260914_113118/google_workspace-ok.html" data-title="Google Workspace" data-keywords="google gmail workspace drive calendar meet docs sheets migration automatic sso" data-category="auto">
-        <div class="card-image google">
-          <div class="card-logo">GW</div>
-        </div>
-        <div class="card-body">
-          <span class="card-tag auto"><span class="card-tag-dot"></span>Update email automatique</span>
-          <h2 class="card-title">Google Workspace</h2>
-          <p class="card-desc">Gmail, Drive, Calendar et Meet sont accessibles avec votre nouvelle adresse. Vérifiez la synchronisation de vos données.</p>
-          <div class="card-footer">
-            <span class="card-meta">~5 min</span>
-            <span class="card-cta">View guide <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="#0D8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          </div>
-        </div>
-      </a>
+          <!-- Postman -->
+          <a class="guide-card" href="run_20260914_113118/postman-ok.html"
+             data-title="Postman" data-keywords="postman api testing rest http request workspace migration automatic sso">
+            <div class="card-image postman"><div class="card-logo">Pm</div></div>
+            <div class="card-body">
+              <h2 class="card-title">Postman</h2>
+              <p class="card-desc">Votre espace de travail Postman est accessible avec votre nouvelle adresse. Vérifiez vos collections et environnements.</p>
+              <div class="card-footer">
+                <span class="card-meta">~3 min</span>
+                <span class="card-cta">View guide <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="#0D8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+          </a>
 
-      <!-- Lusha -->
-      <a class="guide-card" href="run_20260914_113118/lusha-ok.html" data-title="Lusha" data-keywords="lusha leads contacts prospecting sales sso migration automatic" data-category="auto">
-        <div class="card-image lusha">
-          <div class="card-logo">Lu</div>
-        </div>
-        <div class="card-body">
-          <span class="card-tag auto"><span class="card-tag-dot"></span>Update email automatique</span>
-          <h2 class="card-title">Lusha</h2>
-          <p class="card-desc">Votre compte Lusha a été migré automatiquement via SSO. Vérifiez l'accès à vos contacts et vos crédits.</p>
-          <div class="card-footer">
-            <span class="card-meta">~3 min</span>
-            <span class="card-cta">View guide <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="#0D8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          </div>
-        </div>
-      </a>
+          <!-- Spotify -->
+          <a class="guide-card" href="run_20260914_113118/spotify-ok.html"
+             data-title="Spotify" data-keywords="spotify music streaming audio podcast account migration automatic sso">
+            <div class="card-image spotify"><div class="card-logo">Sp</div></div>
+            <div class="card-body">
+              <h2 class="card-title">Spotify</h2>
+              <p class="card-desc">Votre compte Spotify a été migré automatiquement. Vérifiez que vos playlists et abonnements sont accessibles.</p>
+              <div class="card-footer">
+                <span class="card-meta">~3 min</span>
+                <span class="card-cta">View guide <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="#0D8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+          </a>
 
-      <!-- Postman -->
-      <a class="guide-card" href="run_20260914_113118/postman-ok.html" data-title="Postman" data-keywords="postman api testing rest http request workspace migration automatic sso" data-category="auto">
-        <div class="card-image postman">
-          <div class="card-logo">Pm</div>
         </div>
-        <div class="card-body">
-          <span class="card-tag auto"><span class="card-tag-dot"></span>Update email automatique</span>
-          <h2 class="card-title">Postman</h2>
-          <p class="card-desc">Votre espace de travail Postman est accessible avec votre nouvelle adresse. Vérifiez vos collections et environnements.</p>
-          <div class="card-footer">
-            <span class="card-meta">~3 min</span>
-            <span class="card-cta">View guide <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="#0D8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          </div>
-        </div>
-      </a>
+        <p class="acc-empty">Aucun résultat dans cette catégorie.</p>
+      </div>
+    </section>
 
-      <!-- Spotify -->
-      <a class="guide-card" href="run_20260914_113118/spotify-ok.html" data-title="Spotify" data-keywords="spotify music streaming audio podcast account migration automatic sso" data-category="auto">
-        <div class="card-image spotify">
-          <div class="card-logo">Sp</div>
-        </div>
-        <div class="card-body">
-          <span class="card-tag auto"><span class="card-tag-dot"></span>Update email automatique</span>
-          <h2 class="card-title">Spotify</h2>
-          <p class="card-desc">Votre compte Spotify a été migré automatiquement. Vérifiez que vos playlists et abonnements sont accessibles.</p>
-          <div class="card-footer">
-            <span class="card-meta">~3 min</span>
-            <span class="card-cta">View guide <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="#0D8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          </div>
-        </div>
-      </a>
-
-      <!-- ══ ACTION ADMINISTRATEUR REQUISE (manual) ══ -->
-
-      <!-- PM App EIP -->
-      <a class="guide-card" href="run_20260914_113118/pmapp_eip-manual.html" data-title="PM App EIP" data-keywords="pmapp eip efficientip project management pm tool internal manual admin" data-category="admin">
-        <div class="card-image pmapp">
-          <div class="card-logo">PM</div>
-        </div>
-        <div class="card-body">
-          <span class="card-tag admin"><span class="card-tag-dot"></span>Action administrateur requise</span>
-          <h2 class="card-title">PM App EfficientIP</h2>
-          <p class="card-desc">La mise à jour de ce compte nécessite une action de l'administrateur du site. Consultez le guide pour soumettre la demande.</p>
-          <div class="card-footer">
-            <span class="card-meta">Action requise</span>
-            <span class="card-cta">View guide <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="#0D8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          </div>
-        </div>
-      </a>
-
-      <!-- TechKB EIP -->
-      <a class="guide-card" href="run_20260914_113118/techkb_eip-manual.html" data-title="TechKB EIP" data-keywords="techkb eip efficientip knowledge base technical documentation internal manual admin" data-category="admin">
-        <div class="card-image techkb">
-          <div class="card-logo">KB</div>
-        </div>
-        <div class="card-body">
-          <span class="card-tag admin"><span class="card-tag-dot"></span>Action administrateur requise</span>
-          <h2 class="card-title">TechKB EfficientIP</h2>
-          <p class="card-desc">L'accès à la base de connaissances technique requiert une action de l'administrateur. Suivez les étapes du guide.</p>
-          <div class="card-footer">
-            <span class="card-meta">Action requise</span>
-            <span class="card-cta">View guide <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="#0D8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          </div>
-        </div>
-      </a>
-
-    </div><!-- /card-grid -->
-
-    <!-- ── No results ── -->
-    <div id="no-results" role="alert" aria-live="polite">
+    <!-- ── Global no results (all sections empty) ── -->
+    <div id="no-results">
       <div class="no-results-icon">
         <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
           <circle cx="13" cy="13" r="9" stroke="#9AABBE" stroke-width="1.8"/>
@@ -821,11 +740,11 @@
           <path d="M13 10V16" stroke="#9AABBE" stroke-width="1.8" stroke-linecap="round"/>
         </svg>
       </div>
-      <h2>No guide found</h2>
-      <p>No tutorial matches "<strong id="search-term"></strong>". If you can't find what you need, reach out to the support team.</p>
+      <h2>Aucun guide trouvé</h2>
+      <p>Aucun tutoriel ne correspond à "<strong id="search-term"></strong>". Si vous ne trouvez pas ce qu'il vous faut, contactez l'équipe support.</p>
       <a class="btn-mail" id="mail-link" href="mailto:support@efficientip.com?subject=Missing%20guide%20%E2%80%93%20Account%20migration">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="3.5" width="12" height="9" rx="1.5" stroke="white" stroke-width="1.5"/><path d="M2 5.5L8 9.5L14 5.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
-        Email the support team
+        Contacter le support
       </a>
     </div>
 
@@ -838,42 +757,27 @@
 
   <!-- ═══ LOGIC ═════════════════════════════════════════ -->
   <script>
+    // ── Accordion ─────────────────────────────────────
+    function toggleSection(id) {
+      document.getElementById(id).classList.toggle('open');
+    }
+
+    // ── Search vars ───────────────────────────────────
     const input      = document.getElementById('search-input');
     const clearBtn   = document.getElementById('search-clear');
-    const grid       = document.getElementById('card-grid');
     const noResults  = document.getElementById('no-results');
     const termEl     = document.getElementById('search-term');
     const mailLink   = document.getElementById('mail-link');
-    const label      = document.getElementById('results-label');
     const didYouMean = document.getElementById('did-you-mean');
-    const allCards   = Array.from(document.querySelectorAll('.guide-card'));
 
-    let activeFilter = 'all';
+    const SECTIONS = [
+      { id: 'sec-user',  gridId: 'grid-user',  badgeId: 'badge-user' },
+      { id: 'sec-admin', gridId: 'grid-admin', badgeId: 'badge-admin' },
+      { id: 'sec-auto',  gridId: 'grid-auto',  badgeId: 'badge-auto' },
+    ];
 
-    // ── Category counts ───────────────────────────────
-    function updateCounts() {
-      const visible = filteredByCategory();
-      document.getElementById('count-all').textContent   = allCards.length;
-      document.getElementById('count-user').textContent  = allCards.filter(c => c.dataset.category === 'user').length;
-      document.getElementById('count-auto').textContent  = allCards.filter(c => c.dataset.category === 'auto').length;
-      document.getElementById('count-admin').textContent = allCards.filter(c => c.dataset.category === 'admin').length;
-    }
-    updateCounts();
-
-    function filteredByCategory() {
-      if (activeFilter === 'all') return allCards;
-      return allCards.filter(c => c.dataset.category === activeFilter);
-    }
-
-    // ── Filter tab clicks ─────────────────────────────
-    document.getElementById('filter-wrap').addEventListener('click', e => {
-      const btn = e.target.closest('.filter-btn');
-      if (!btn) return;
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      activeFilter = btn.dataset.filter;
-      runSearch();
-    });
+    // collect all cards once
+    const allCards = Array.from(document.querySelectorAll('.guide-card'));
 
     // ── Normalize ─────────────────────────────────────
     function normalize(str) {
@@ -895,10 +799,10 @@
 
     function buildVocabulary() {
       const vocab = new Set();
-      allCards.forEach(card => {
-        normalize(card.dataset.keywords + ' ' + card.dataset.title)
-          .split(/\s+/).forEach(w => { if (w.length >= 3) vocab.add(w); });
-      });
+      allCards.forEach(c =>
+        normalize(c.dataset.keywords + ' ' + c.dataset.title)
+          .split(/\s+/).forEach(w => { if (w.length >= 3) vocab.add(w); })
+      );
       return Array.from(vocab);
     }
     const VOCAB = buildVocabulary();
@@ -910,35 +814,32 @@
         .filter(w => Math.abs(w.length - query.length) <= 4)
         .map(w => ({ word: w, dist: levenshtein(query, w) }))
         .filter(({ dist }) => {
-          const threshold = Math.min(3, Math.max(1, Math.floor(query.length * 0.4)));
-          return dist > 0 && dist <= threshold;
+          const t = Math.min(3, Math.max(1, Math.floor(query.length * 0.4)));
+          return dist > 0 && dist <= t;
         })
         .sort((a, b) => a.dist - b.dist);
       const seen = new Set();
-      return scored.filter(({ word }) => {
-        if (seen.has(word)) return false;
-        seen.add(word);
-        return true;
-      }).slice(0, 2).map(s => s.word);
+      return scored
+        .filter(({ word }) => { if (seen.has(word)) return false; seen.add(word); return true; })
+        .slice(0, 2).map(s => s.word);
     }
 
     // ── Highlight ─────────────────────────────────────
     function highlight(node, query) {
       const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, null);
       const toReplace = [];
-      let textNode;
-      while ((textNode = walker.nextNode())) {
-        const parent = textNode.parentNode;
-        if (parent.tagName === 'MARK') continue;
-        const normText = normalize(textNode.textContent);
-        const idx = normText.indexOf(query);
-        if (idx !== -1) toReplace.push({ node: textNode, idx, len: query.length });
+      let t;
+      while ((t = walker.nextNode())) {
+        if (t.parentNode.tagName === 'MARK') continue;
+        const norm = normalize(t.textContent);
+        const idx = norm.indexOf(query);
+        if (idx !== -1) toReplace.push({ node: t, idx, len: query.length });
       }
       toReplace.reverse().forEach(({ node, idx, len }) => {
         const before = node.textContent.slice(0, idx);
         const match  = node.textContent.slice(idx, idx + len);
         const after  = node.textContent.slice(idx + len);
-        const mark   = document.createElement('mark');
+        const mark = document.createElement('mark');
         mark.textContent = match;
         const frag = document.createDocumentFragment();
         if (before) frag.appendChild(document.createTextNode(before));
@@ -961,8 +862,7 @@
       if (!suggestions.length) { didYouMean.classList.remove('visible'); return; }
       suggestions.forEach(word => {
         const pill = document.createElement('button');
-        pill.className = 'suggestion-pill';
-        pill.type = 'button';
+        pill.className = 'suggestion-pill'; pill.type = 'button';
         pill.setAttribute('aria-label', 'Search: ' + word);
         pill.innerHTML = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 6a5 5 0 1 0 10 0A5 5 0 0 0 1 6Zm3-1.5 2 1.5-2 1.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>${word}`;
         pill.addEventListener('click', () => { input.value = word; hideSuggestions(); runSearch(); input.focus(); });
@@ -970,72 +870,84 @@
       });
       didYouMean.classList.add('visible');
     }
-
     function hideSuggestions() {
       didYouMean.querySelectorAll('.suggestion-pill').forEach(el => el.remove());
       didYouMean.classList.remove('visible');
     }
 
-    // ── Main search + filter runner ───────────────────
+    // ── Main runner ───────────────────────────────────
     function runSearch() {
       const raw   = input.value.trim();
       const query = normalize(raw);
-      const pool  = filteredByCategory();
 
       clearBtn.classList.toggle('visible', raw.length > 0);
 
-      // First hide all cards, then show those in the pool
+      // restore all cards first
       allCards.forEach(card => {
         clearHighlights(card.querySelector('.card-body'));
-        card.style.display = 'none';
+        card.hidden = false;
       });
 
-      if (!query) {
-        hideSuggestions();
-        pool.forEach(card => { card.style.display = ''; });
-        noResults.style.display = 'none';
-        grid.style.display      = '';
-        label.textContent       = pool.length + ' guide' + (pool.length > 1 ? 's' : '') + ' available';
-        return;
-      }
+      let totalVisible = 0;
 
-      let visible = 0;
-      pool.forEach(card => {
-        const haystack = normalize(card.dataset.keywords + ' ' + card.dataset.title);
-        if (haystack.includes(query)) {
-          card.style.display = '';
-          highlight(card.querySelector('.card-body'), query);
-          visible++;
+      SECTIONS.forEach(({ id, gridId, badgeId }) => {
+        const sec   = document.getElementById(id);
+        const cards = Array.from(document.getElementById(gridId).querySelectorAll('.guide-card'));
+        let sectionVisible = 0;
+
+        if (!query) {
+          cards.forEach(c => { c.hidden = false; });
+          sectionVisible = cards.length;
+        } else {
+          cards.forEach(card => {
+            const haystack = normalize(card.dataset.keywords + ' ' + card.dataset.title);
+            if (haystack.includes(query)) {
+              card.hidden = false;
+              highlight(card.querySelector('.card-body'), query);
+              sectionVisible++;
+            } else {
+              card.hidden = true;
+            }
+          });
         }
+
+        // update badge
+        document.getElementById(badgeId).textContent = sectionVisible + ' app' + (sectionVisible !== 1 ? 's' : '');
+
+        // empty state
+        sec.dataset.empty = sectionVisible === 0 ? 'true' : 'false';
+
+        // auto-expand sections with results when searching
+        if (query && sectionVisible > 0) sec.classList.add('open');
+        if (query && sectionVisible === 0) sec.classList.remove('open');
+
+        totalVisible += sectionVisible;
       });
 
-      if (visible === 0) {
+      // global no-results
+      const sections = document.querySelectorAll('.acc-section');
+      if (!query) {
+        noResults.style.display = 'none';
+        sections.forEach(s => { s.style.display = ''; });
+        hideSuggestions();
+      } else if (totalVisible === 0) {
         noResults.style.display = 'block';
-        grid.style.display      = 'none';
-        label.textContent       = 'No results';
-        termEl.textContent      = raw;
-        mailLink.href = `mailto:support@efficientip.com?subject=Missing%20guide%20%E2%80%93%20${encodeURIComponent(raw)}&body=Hello%2C%0A%0AI%20could%20not%20find%20a%20guide%20for%20%22${encodeURIComponent(raw)}%22%20in%20the%20account%20migration%20directory.%0A%0AThank%20you%20for%20your%20help.`;
+        sections.forEach(s => { s.style.display = 'none'; });
+        termEl.textContent = raw;
+        mailLink.href = `mailto:support@efficientip.com?subject=Missing%20guide%20%E2%80%93%20${encodeURIComponent(raw)}&body=Hello%2C%0A%0AJe%20n%27ai%20pas%20trouv%C3%A9%20de%20guide%20pour%20%22${encodeURIComponent(raw)}%22%20dans%20le%20r%C3%A9pertoire%20de%20migration.%0A%0AMerci%20pour%20votre%20aide.`;
         const tokens = query.split(/\s+/).filter(t => t.length >= 2);
-        const allSuggestions = [];
-        tokens.forEach(token => findSuggestions(token).forEach(s => { if (!allSuggestions.includes(s)) allSuggestions.push(s); }));
-        renderSuggestions(allSuggestions.slice(0, 2));
+        const sugg = [];
+        tokens.forEach(tok => findSuggestions(tok).forEach(s => { if (!sugg.includes(s)) sugg.push(s); }));
+        renderSuggestions(sugg.slice(0, 2));
       } else {
         noResults.style.display = 'none';
-        grid.style.display      = '';
+        sections.forEach(s => { s.style.display = ''; });
         hideSuggestions();
-        label.textContent = visible + ' guide' + (visible > 1 ? 's' : '') + ' found';
       }
     }
 
     input.addEventListener('input', runSearch);
     clearBtn.addEventListener('click', () => { input.value = ''; runSearch(); input.focus(); });
-
-    // Cards with no real href stay non-navigable
-    allCards.forEach(card => {
-      if (card.getAttribute('href') === '#') {
-        card.addEventListener('click', e => e.preventDefault());
-      }
-    });
   </script>
 </body>
 </html>
