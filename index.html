@@ -590,6 +590,66 @@
       </div>
     </section>
 
+    <section class="acc-section admin open" id="sec-eip-admin">
+      <div class="acc-header" role="button" tabindex="0" aria-expanded="true" aria-controls="body-eip-admin"
+           onclick="toggleSection('sec-eip-admin'); this.setAttribute('aria-expanded', this.parentElement.classList.contains('open'))"
+           onkeydown="if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); this.click(); }">
+        <div class="acc-icon" aria-hidden="true">⏳</div>
+        <div class="acc-title-wrap">
+          <div class="acc-top">
+            <span class="acc-title">Intervention administrateur EfficientIP — en cours</span>
+            <span class="acc-badge" id="badge-eip-admin">3 apps</span>
+          </div>
+          <p class="acc-desc">Ces sites nécessitent l’action d’un administrateur EfficientIP. Nous travaillons actuellement dessus, mais aucune solution n’est disponible pour le moment.</p>
+        </div>
+        <svg class="acc-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M5 7.5L10 12.5L15 7.5" stroke="#5A6B82" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="acc-body" id="body-eip-admin">
+        <div class="card-grid" id="grid-eip-admin">
+          <a class="guide-card" href="run_20260914_113118/rdit-manual.html"
+             data-title="RDIT" data-keywords="RDIT https://rdit.int.efficientip.com/login_page.php efficientip admin administrateur intervention migration en cours aucune solution">
+            <div class="card-image techkb"><div class="card-logo">RD</div></div>
+            <div class="card-body">
+              <h2 class="card-title">RDIT</h2>
+              <p class="card-desc">Une intervention d’un administrateur EfficientIP est nécessaire. Nous travaillons dessus ; aucune solution n’est disponible pour le moment.</p>
+              <div class="card-footer">
+                <span class="card-meta">En cours de traitement</span>
+                <span class="card-cta">Voir le statut →</span>
+              </div>
+            </div>
+          </a>
+
+          <a class="guide-card" href="run_20260914_113118/rdit-tools-manual.html"
+             data-title="RDIT Tools" data-keywords="RDIT Tools https://rdit-tools.int.efficientip.com/ efficientip admin administrateur intervention migration en cours aucune solution">
+            <div class="card-image techkb"><div class="card-logo">RT</div></div>
+            <div class="card-body">
+              <h2 class="card-title">RDIT Tools</h2>
+              <p class="card-desc">Une intervention d’un administrateur EfficientIP est nécessaire. Nous travaillons dessus ; aucune solution n’est disponible pour le moment.</p>
+              <div class="card-footer">
+                <span class="card-meta">En cours de traitement</span>
+                <span class="card-cta">Voir le statut →</span>
+              </div>
+            </div>
+          </a>
+
+          <a class="guide-card" href="run_20260914_113118/my-efficientip-manual.html"
+             data-title="My EfficientIP" data-keywords="My EfficientIP https://my.efficientip.com/ efficientip admin administrateur intervention migration en cours aucune solution">
+            <div class="card-image techkb"><div class="card-logo">My</div></div>
+            <div class="card-body">
+              <h2 class="card-title">My EfficientIP</h2>
+              <p class="card-desc">Une intervention d’un administrateur EfficientIP est nécessaire. Nous travaillons dessus ; aucune solution n’est disponible pour le moment.</p>
+              <div class="card-footer">
+                <span class="card-meta">En cours de traitement</span>
+                <span class="card-cta">Voir le statut →</span>
+              </div>
+            </div>
+          </a>
+        </div>
+        <p class="acc-empty">Aucun résultat dans cette catégorie.</p>
+      </div>
+    </section>
     <!-- ══ 3. UPDATE EMAIL AUTOMATIQUE ════════════════ -->
     <section class="acc-section auto open" id="sec-auto">
       <div class="acc-header" onclick="toggleSection('sec-auto')">
@@ -817,6 +877,7 @@
     const SECTIONS = [
       { id: 'sec-user',  gridId: 'grid-user',  badgeId: 'badge-user' },
       { id: 'sec-admin', gridId: 'grid-admin', badgeId: 'badge-admin' },
+      { id: 'sec-eip-admin', gridId: 'grid-eip-admin', badgeId: 'badge-eip-admin' },
       { id: 'sec-auto',  gridId: 'grid-auto',  badgeId: 'badge-auto' },
     ];
 
@@ -965,6 +1026,8 @@
         if (query && sectionVisible > 0) sec.classList.add('open');
         if (query && sectionVisible === 0) sec.classList.remove('open');
 
+        const trigger = sec.querySelector('[aria-expanded]');
+        if (trigger) trigger.setAttribute('aria-expanded', sec.classList.contains('open'));
         totalVisible += sectionVisible;
       });
 
