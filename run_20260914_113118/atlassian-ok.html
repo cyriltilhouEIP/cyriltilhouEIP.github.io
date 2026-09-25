@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Atlassian — Migration automatique</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #1A2B47; --navy-deep: #111C30; --bg: #F0F3F8; --white: #FFFFFF;
+      --teal: #0D8A8A; --teal-light: #E0F4F4; --amber: #F0A500;
+      --text: #1A2B47; --muted: #5A6B82; --border: #D8DFF0;
+      --shadow: 0 2px 16px rgba(26,43,71,.10);
+      --claude: #C87533; --claude-dark: #6B3010; --claude-deep: #2C1A0E;
+      --claude-light: #FDF0E6; --claude-muted: #A0531A;
+    }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+    header { background: var(--navy); padding: 48px 24px 44px; position: relative; overflow: hidden; }
+    header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; border-radius: 50%; background: rgba(200,117,51,.10); pointer-events: none; }
+    header::after  { content: ''; position: absolute; bottom: -60px; left: -60px; width: 220px; height: 220px; border-radius: 50%; background: rgba(240,165,0,.07); pointer-events: none; }
+    .header-inner { max-width: 800px; margin: 0 auto; position: relative; z-index: 1; }
+    .header-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: rgba(200,117,51,.18); color: #E8A96A; font-size: .72rem; font-weight: 600; letter-spacing: .12em; padding: 4px 14px; border-radius: 20px; margin-bottom: 18px; text-transform: uppercase; }
+    header h1 { font-family: 'Sora', sans-serif; font-size: clamp(1.7rem,3.5vw,2.4rem); font-weight: 700; color: var(--white); line-height: 1.25; margin-bottom: 14px; }
+    header h1 span { color: var(--amber); }
+    header p { font-size: .97rem; line-height: 1.7; color: rgba(255,255,255,.68); max-width: 600px; }
+    .header-meta { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 28px; }
+    .meta-chip { display: flex; align-items: center; gap: 7px; font-size: .78rem; font-weight: 500; color: rgba(255,255,255,.55); }
+    .progress-bar-wrap { background: var(--white); border-bottom: 1px solid var(--border); padding: 0 24px; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 8px rgba(26,43,71,.06); }
+    .progress-bar-inner { max-width: 800px; margin: 0 auto; display: flex; align-items: center; gap: 16px; padding: 14px 0; }
+    .progress-track { flex: 1; height: 5px; background: var(--border); border-radius: 99px; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--claude-dark), var(--claude)); border-radius: 99px; width: 0%; transition: width .4s ease; }
+    .progress-label { font-size: .78rem; font-weight: 600; color: var(--muted); white-space: nowrap; min-width: 80px; text-align: right; }
+    main { max-width: 800px; width: 100%; margin: 0 auto; padding: 48px 24px 80px; flex: 1; }
+    .step { background: var(--white); border-radius: 16px; box-shadow: var(--shadow); overflow: hidden; margin-bottom: 24px; border: 1.5px solid transparent; transition: border-color .25s; }
+    .step.active { border-color: var(--claude); }
+    .step-header { display: flex; align-items: flex-start; gap: 18px; padding: 24px 24px 20px; cursor: pointer; user-select: none; }
+    .step-number { flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; background: var(--claude-light); color: var(--claude-muted); font-family: 'Sora', sans-serif; font-size: .9rem; font-weight: 700; display: flex; align-items: center; justify-content: center; transition: background .25s, color .25s; }
+    .step.active .step-number { background: var(--claude); color: var(--white); }
+    .step.done .step-number { background: #E6F5F0; color: #0D8A8A; }
+    .step-title-wrap { flex: 1; }
+    .step-label { font-size: .7rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+    .step-title { font-family: 'Sora', sans-serif; font-size: 1rem; font-weight: 700; color: var(--navy); line-height: 1.3; }
+    .step-chevron { flex-shrink: 0; color: var(--muted); transition: transform .25s; margin-top: 6px; }
+    .step.open .step-chevron { transform: rotate(180deg); }
+    .step-body { display: none; padding: 0 24px 26px; border-top: 1px solid var(--border); }
+    .step.open .step-body { display: block; }
+    .step-body p { font-size: .9rem; line-height: 1.75; color: var(--muted); margin: 16px 0; }
+    .substep-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin: 16px 0; }
+    .substep-list li { display: flex; gap: 12px; align-items: flex-start; font-size: .875rem; line-height: 1.6; color: var(--text); }
+    .substep-bullet { flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; background: var(--claude-light); border: 1.5px solid rgba(200,117,51,.3); display: flex; align-items: center; justify-content: center; margin-top: 1px; font-size: .65rem; font-weight: 700; color: var(--claude-muted); }
+    .screenshot-wrap { margin: 20px 0; border-radius: 12px; overflow: hidden; border: 1.5px solid var(--border); box-shadow: 0 4px 20px rgba(26,43,71,.08); }
+    .screenshot-wrap img { width: 100%; display: block; }
+    .screenshot-caption { background: var(--bg); padding: 10px 14px; font-size: .78rem; color: var(--muted); border-top: 1px solid var(--border); }
+    .callout { display: flex; gap: 14px; align-items: flex-start; background: var(--claude-light); border-left: 3px solid var(--claude); border-radius: 0 10px 10px 0; padding: 14px 16px; margin: 16px 0; font-size: .86rem; line-height: 1.65; color: var(--claude-muted); }
+    .callout-info    { background: var(--teal-light); border-color: var(--teal); color: #0A6060; }
+    .callout-success { background: #E6F5F0; border-color: #0D8A8A; color: #0A6060; }
+    .callout-warning { background: #FFF8E6; border-color: var(--amber); color: #7A5200; }
+    .btn-done { display: inline-flex; align-items: center; gap: 8px; background: var(--navy); color: var(--white); font-family: 'Inter', sans-serif; font-size: .85rem; font-weight: 600; border: none; cursor: pointer; padding: 10px 20px; border-radius: 10px; margin-top: 18px; transition: background .2s, transform .15s; }
+    .btn-done:hover { background: var(--claude); transform: translateY(-1px); }
+    .step.done .btn-done { background: #E6F5F0; color: #0D8A8A; pointer-events: none; }
+    #completion-banner { display: none; background: linear-gradient(135deg, var(--claude-deep) 0%, var(--claude-dark) 60%, var(--claude) 100%); border-radius: 16px; padding: 36px 32px; text-align: center; color: var(--white); margin-top: 32px; box-shadow: 0 8px 32px rgba(200,117,51,.25); }
+    #completion-banner.visible { display: block; }
+    #completion-banner .banner-icon { width: 56px; height: 56px; border-radius: 50%; background: rgba(255,255,255,.15); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+    #completion-banner h2 { font-family: 'Sora', sans-serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 10px; }
+    #completion-banner p { font-size: .9rem; line-height: 1.7; color: rgba(255,255,255,.75); max-width: 420px; margin: 0 auto; }
+    footer { background: var(--navy-deep); color: rgba(255,255,255,.45); text-align: center; padding: 24px; font-size: .8rem; }
+    /* ── Simple message card (Type A & C) ── */
+    .message-card { background: var(--white); border-radius: 16px; box-shadow: var(--shadow); padding: 40px; text-align: center; }
+    .message-card .icon { font-size: 3rem; margin-bottom: 20px; }
+    .message-card h2 { font-family: 'Sora', sans-serif; font-size: 1.35rem; font-weight: 700; color: var(--navy); margin-bottom: 12px; }
+    .message-card p { font-size: .95rem; line-height: 1.75; color: var(--muted); max-width: 520px; margin: 0 auto 24px; }
+    .contact-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--navy); color: white; padding: 12px 24px; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: .88rem; }
+    .contact-btn:hover { background: var(--claude); }
+    .option-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 28px; }
+    .option-card { background: var(--bg); border: 1.5px solid var(--border); border-radius: 12px; padding: 24px; text-align: left; }
+    .option-card h3 { font-family: 'Sora', sans-serif; font-size: .95rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+    .option-card p { font-size: .85rem; line-height: 1.6; color: var(--muted); margin: 0; }
+    @media (max-width: 600px) { .option-grid { grid-template-columns: 1fr; } header { padding: 36px 20px; } }
+</style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="header-eyebrow">✅ Migration automatique · Aucune action requise</div>
+      <h1>Votre compte <span>Atlassian</span> est prêt</h1>
+      <p>Votre compte Atlassian a été migré automatiquement après le changement de votre adresse email.</p>
+    </div>
+  </header>
+  <main>
+    <a href="../index.html#sec-auto" style="display:inline-block;margin-bottom:24px;color:var(--teal);font-weight:600">← Retour aux guides de migration</a>
+    <section class="message-card" aria-labelledby="status-title">
+      <div class="icon" aria-hidden="true">✅</div>
+      <h2 id="status-title">Aucune action requise sur Atlassian</h2>
+      <p>La migration de votre compte est automatique. Vous n’avez aucune modification manuelle à effectuer.</p>
+      <div class="callout callout-success" style="text-align:left;max-width:520px;margin:0 auto">
+        <span>Utilisez votre nouvelle adresse email lors de votre prochaine connexion à Atlassian.</span>
+      </div>
+    </section>
+  </main>
+  <footer>Documentation interne — Migration des comptes EfficientIP</footer>
+</body>
+</html>
