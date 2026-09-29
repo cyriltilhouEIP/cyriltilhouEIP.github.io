@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>JetBrains — Supporté par défaut</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #1A2B47; --navy-deep: #111C30; --bg: #F0F3F8; --white: #FFFFFF;
+      --teal: #0D8A8A; --amber: #F0A500; --text: #1A2B47; --muted: #5A6B82;
+      --shadow: 0 2px 16px rgba(26,43,71,.10);
+    }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+    header { background: var(--navy); padding: 48px 24px 44px; }
+    .header-inner, main { max-width: 800px; margin: 0 auto; }
+    .header-eyebrow { display: inline-flex; background: rgba(13,138,138,.18); color: #78D5D5; font-size: .72rem; font-weight: 600; letter-spacing: .12em; padding: 4px 14px; border-radius: 20px; margin-bottom: 18px; text-transform: uppercase; }
+    header h1 { font-family: 'Sora', sans-serif; font-size: clamp(1.7rem,3.5vw,2.4rem); font-weight: 700; color: var(--white); line-height: 1.25; margin-bottom: 14px; }
+    header h1 span { color: var(--amber); }
+    header p { font-size: .97rem; line-height: 1.7; color: rgba(255,255,255,.68); max-width: 600px; }
+    main { width: 100%; padding: 48px 24px 80px; flex: 1; }
+    .back-link { display: inline-block; margin-bottom: 24px; color: var(--teal); font-weight: 600; text-decoration: none; }
+    .message-card { background: var(--white); border-radius: 16px; box-shadow: var(--shadow); padding: 40px; text-align: center; }
+    .message-card .icon { font-size: 3rem; margin-bottom: 20px; }
+    .message-card h2 { font-family: 'Sora', sans-serif; font-size: 1.35rem; font-weight: 700; color: var(--navy); margin-bottom: 12px; }
+    .message-card p { font-size: .95rem; line-height: 1.75; color: var(--muted); max-width: 520px; margin: 0 auto 24px; }
+    .callout { background: #E6F5F0; border-left: 3px solid var(--teal); border-radius: 0 10px 10px 0; color: #0A6060; font-size: .86rem; line-height: 1.65; margin: 0 auto; max-width: 520px; padding: 14px 16px; text-align: left; }
+    footer { background: var(--navy-deep); color: rgba(255,255,255,.45); text-align: center; padding: 24px; font-size: .8rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="header-eyebrow">Supporté par défaut</div>
+      <h1><span>JetBrains</span> est pris en charge</h1>
+      <p>Les produits JetBrains sont supportés par défaut dans le cadre de la migration des comptes.</p>
+    </div>
+  </header>
+  <main>
+    <a class="back-link" href="../index.html#sec-eip-admin">← Retour aux guides de migration</a>
+    <section class="message-card" aria-labelledby="status-title">
+      <div class="icon" aria-hidden="true">✅</div>
+      <h2 id="status-title">Aucune action spécifique requise</h2>
+      <p>Vous pouvez continuer à utiliser JetBrains normalement. Aucune procédure manuelle de migration n’est nécessaire.</p>
+      <div class="callout">
+        <span>Si une application JetBrains vous demande de vous reconnecter, utilisez votre compte EfficientIP habituel.</span>
+      </div>
+    </section>
+  </main>
+  <footer>Documentation interne — Migration des comptes EfficientIP</footer>
+</body>
+</html>
